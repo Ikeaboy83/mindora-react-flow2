@@ -104,7 +104,7 @@ const initialNodes = [
     id: 'category-right-1',
     type: 'category-right',
     position: { x: 2300, y: 0 },
-    data: { label: '4. TOOLS & TECHNIKEN' },
+    data: { label: '4. TOOLS & TECH' },
   },
   {
     id: 'category-right-bottom',
