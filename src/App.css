@@ -6,6 +6,10 @@
   text-align: center;
 }
 
+.react-flow__node {
+  touch-action: manipulation;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
