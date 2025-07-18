@@ -1,6 +1,34 @@
 import { Handle, Position } from '@xyflow/react';
+import { useEffect } from 'react';
 
 export default function CentralNode({ data }) {
+  function usePinchPassThrough() {
+    useEffect(() => {
+      function handleTouchStart(e) {
+        if (e.touches && e.touches.length > 1) {
+          // Pinch-Geste erkannt: Pointer-Events auf allen Nodes deaktivieren
+          document.querySelectorAll('.react-flow__node').forEach(node => {
+            node.style.pointerEvents = 'none';
+          });
+        }
+      }
+      function handleTouchEnd(e) {
+        // Nach der Geste Pointer-Events wieder aktivieren
+        document.querySelectorAll('.react-flow__node').forEach(node => {
+          node.style.pointerEvents = '';
+        });
+      }
+      document.addEventListener('touchstart', handleTouchStart, { passive: true });
+      document.addEventListener('touchend', handleTouchEnd, { passive: true });
+      document.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+      return () => {
+        document.removeEventListener('touchstart', handleTouchStart);
+        document.removeEventListener('touchend', handleTouchEnd);
+        document.removeEventListener('touchcancel', handleTouchEnd);
+      };
+    }, []);
+  }
+
   return (
     <div
     style={{
