@@ -220,6 +220,10 @@ function FlowApp() {
         minZoom={0.01}
         maxZoom={8}
         onNodeClick={onNodeClick}
+        zoomOnPinch={true}      // <--- explizit aktivieren
+        panOnDrag={true}        // <--- explizit aktivieren
+        zoomOnScroll={true}     // <--- für Desktop
+        panOnScroll={false}     // <--- für Touch nicht nötig
       >
         <Controls
           style={{
