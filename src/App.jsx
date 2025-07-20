@@ -7,6 +7,10 @@ import CategoryNode from './components/CategoryNode';
 import CategoryNodeRight from './components/categoryNodeRight';
 import LerneinheitNode from './components/LerneinheitNode';
 import GridBoxNode from './components/GridBoxNode';
+import DeadlineIconNode from './components/status/DeadlineIconNode';
+import LerneinheitNodeDeadline from './components/LerneinheitNodeDeadline';
+import FavoritIconNode from './components/status/FavoritIconNode';
+import CategoryNode1 from './components/courseOverview/categoryNode1';
 import { createGridNodes } from './utils/gridUtils';
 import { getGridPosition } from './utils/gridUtils';
 import { useEffect, useCallback } from 'react';
@@ -28,6 +32,11 @@ const nodeTypes = {
   'category-right': CategoryNodeRight,
   'lerneinheit': LerneinheitNode,
   'gridbox': GridBoxNode,
+  'deadline-icon': DeadlineIconNode, // bisheriger Node-Typ
+  lerneinheitDeadline: LerneinheitNodeDeadline,
+  deadlineIcon: DeadlineIconNode, // NEU: für das Icon im Status-Ordner
+  favoritIcon: FavoritIconNode,
+  category1: CategoryNode1, // NEU: categoryNode1
 };
 
 // Lern-Elemente automatisch generieren
@@ -44,7 +53,7 @@ const cellHeight = (containerHeight - 2 * padding - (rows - 1) * gap) / rows;
 const offsetX = padding;
 const offsetY = padding;
 
-const gridBoxPosition = { x: -500, y: 175 }; // Beispiel: beliebige Position
+const gridBoxPosition = { x: -480, y: 175 }; // Beispiel: beliebige Position
 
 const lerneinheitNodes = createGridNodes({
   rows,
@@ -60,7 +69,7 @@ const lerneinheitNodes = createGridNodes({
 });
 
 const initialNodes = [
-  //Zeigt rechteckigen Kasten
+  //Zeigt transparente Node im Hintergrund des GridBoxNode
   {
     id: 'grid-box-1',
     type: 'gridbox',
@@ -72,22 +81,23 @@ const initialNodes = [
       border: 'none',
     },
     data: {},
+    selected: true, // Temporär auf true gesetzt, damit du den Glow siehst
   },
   ...lerneinheitNodes,
 
-      {
+
+  {
     id: 'category-top',
     type: 'category',
-    position: { x: 150, y: -5
-     }, // oben
+    position: { x: 150, y: -5 },
     data: { label: '1.\nEINFÜHRUNG' },
-    },
-    {
-      id: 'central-node',
-      type: 'custom',
-      position: { x: 1100, y: 630 },
-      data: { label: 'AGILES\nPROJEKT-\nMANAGEMENT' },
-    },
+  },
+  {
+    id: 'central-node',
+    type: 'custom',
+    position: { x: 1100, y: 630 },
+    data: { label: 'AGILES\nPROJEKT-\nMANAGEMENT' },
+  },
   {
     id: 'category-middle',
     type: 'category',
@@ -111,6 +121,31 @@ const initialNodes = [
     type: 'category-right',
     position: { x: 2300, y: 750 },
     data: { label: '5.\nROLLEN' },
+  },
+  {
+    id: 'deadline1',
+    type: 'lerneinheitDeadline',
+    position: { x: 711, y: 706 }, // deine gewünschte Position
+    data: { property1: 'Einzel' },
+  },
+  {
+    id: 'deadline-icon-1',
+    type: 'deadlineIcon',
+    position: { x: 715, y: 710
+     }, // Beispiel-Position
+    data: {},
+  },
+  {
+    id: 'favorit-icon-1',
+    type: 'favoritIcon',
+    position: { x: 715, y: 733 }, // Beispiel-Position
+    data: {},
+  },
+  {
+    id: 'category1-test',
+    type: 'category1',
+    position: { x: 800, y: 0 },
+    data: { label: 'Neue Kategorie' },
   },
 ];
 

@@ -32,13 +32,14 @@ export default function CentralNode({ data }) {
   return (
     <div
     style={{
-      width: 880,   // vorher: 220
-      height: 880,  // vorher: 220
+      width: 880,
+      height: 880,
       borderRadius: '50%',
-      background: '#30b89b',
-      color: 'white',
+      background: '#01D2BC',
+      border: '4px solid #01D2BC',
+      color: '#fff',
       fontWeight: 'bold',
-      fontSize: 72, // vorher: 18
+      fontSize: 72,
       textAlign: 'center',
       display: 'flex',
       alignItems: 'center',
@@ -55,20 +56,25 @@ export default function CentralNode({ data }) {
         style={{
           top: '50%',
           transform: 'translateY(-50%)',
-          background: '#30b89b', // gleiche Farbe wie der Kreis
-          border: '2px solid transparent' // kein sichtbarer Rand
-
+          background: 'transparent',
+          border: 'transparent',
+          width: 20,
+          height: 20,
+          borderRadius: '50%',
         }}
       />
   <Handle
   type="source"
   position={Position.Right}
-  id="right-source" // ✅ Das ist der gesuchte Source-Handle!
+  id="right-source"
   style={{
     top: '50%',
     transform: 'translateY(-50%)',
-    background: '#30b89b',
-    border: '2px solid transparent'
+    background: 'transparent',
+    border: 'transparent',
+    width: 20,
+    height: 20,
+    borderRadius: '50%',
   }}
 />
     </div>

@@ -15,10 +15,23 @@ export function createGridNodes({
   offsetX = 10,
   offsetY = 10,
   parentId = 'grid-box-1',
-  parentX = 0, // NEU
-  parentY = 0, // NEU
+  parentX = 0,
+  parentY = 0,
 }) {
   const nodes = [];
+
+  // Berechne die Gesamtgröße des Grids
+  const gridWidth = cols * cellWidth + (cols - 1) * gap;
+  const gridHeight = rows * cellHeight + (rows - 1) * gap;
+  
+  // Berechne die Container-Größe (mit Padding) 
+  //Hier wird die Positionierung des Containers bestimmt der die Lerneinheiten enthält
+  const containerWidth = 365; // GridBoxNode Breite
+  const containerHeight = 285; // GridBoxNode Höhe
+  
+  // Berechne die Zentrierung
+  const centerOffsetX = (containerWidth - gridWidth) / 2;
+  const centerOffsetY = (containerHeight - gridHeight) / 2;
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -29,8 +42,8 @@ export function createGridNodes({
         id,
         type: 'lerneinheit',
         position: {
-          x: parentX + offsetX + x, // NEU: parentX berücksichtigen
-          y: parentY + offsetY + y, // NEU: parentY berücksichtigen
+          x: parentX + centerOffsetX + x, // Zentriert
+          y: parentY + centerOffsetY + y, // Zentriert
         },
         parentNode: parentId,
         extent: 'parent',

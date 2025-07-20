@@ -6,13 +6,14 @@ export default function CategoryNodeRight({ data }) {
   return (
     <div
     style={{
-        width: 640,   // vorher: 160
-        height: 640,  // vorher: 160
+        width: 640,
+        height: 640,
         borderRadius: '50%',
-        background: '#30b89b',
-        color: 'white',
+        background: '#01D2BC',
+        border: '4px solid #01D2BC',
+        color: '#fff',
         fontWeight: 'bold',
-        fontSize: 64, // vorher: 16
+        fontSize: 64,
         textAlign: 'center',
         display: 'flex',
         alignItems: 'center',
@@ -29,8 +30,8 @@ export default function CategoryNodeRight({ data }) {
         style={{
             top: '50%',
             transform: 'translateY(-50%)',
-            background: '#30b89b', // gleiche Farbe wie der Kreis
-            border: '2px solid transparent' // kein sichtbarer Rand
+            background: '#01D2BC',
+            border: 'transparent',
         }}
       />
       <Handle
@@ -40,8 +41,8 @@ export default function CategoryNodeRight({ data }) {
         style={{
             top: '50%',
             transform: 'translateY(-50%)',
-            background: '#30b89b', // gleiche Farbe wie der Kreis
-            border: '2px solid transparent' // kein sichtbarer Rand
+            background: '#01D2BC',
+            border: 'transparent',
         }}
       />
     </div>
