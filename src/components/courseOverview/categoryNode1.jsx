@@ -39,10 +39,12 @@ export default function CategoryNode1({ data }) {
         position={Position.Left}
         id="left-target"
         style={{
-          top: '55%',
-          transform: 'translateY(-50%)',
-          background: '#01D2BC',
-          border: 'transparent',
+          background: 'transparent',
+          width: 12,
+          height: 12,
+          left: -6,
+          border: 'none',
+          opacity: 0.3,
         }}
       />
       {/* Rechts: Source und Target */}
@@ -62,10 +64,12 @@ export default function CategoryNode1({ data }) {
         position={Position.Right}
         id="right-target"
         style={{
-          top: '55%',
-          transform: 'translateY(-50%)',
-          background: '#01D2BC',
-          border: 'transparent',
+          background: 'transparent',
+          width: 12,
+          height: 12,
+          right: -6,
+          border: 'none',
+          opacity: 0.3,
         }}
       />
     </div>

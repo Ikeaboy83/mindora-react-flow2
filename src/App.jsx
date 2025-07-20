@@ -10,7 +10,13 @@ import GridBoxNode from './components/GridBoxNode';
 import DeadlineIconNode from './components/status/DeadlineIconNode';
 import LerneinheitNodeDeadline from './components/LerneinheitNodeDeadline';
 import FavoritIconNode from './components/status/FavoritIconNode';
+import LockedIconNode from './components/status/LockedIconNode';
+import DoneIconNode from './components/status/DoneIconNode';
+import StartedIconNode from './components/status/StartedIconNode';
 import CategoryNode1 from './components/courseOverview/categoryNode1';
+import DreiGridboxNode from './components/courseOverview/3erGridboxNode';
+import AchtzehnerGridboxNode from './components/courseOverview/18erGridboxNode';
+import DreißigerGridboxNode from './components/courseOverview/30erGridboxNode';
 import { createGridNodes } from './utils/gridUtils';
 import { getGridPosition } from './utils/gridUtils';
 import { useEffect, useCallback } from 'react';
@@ -36,7 +42,13 @@ const nodeTypes = {
   lerneinheitDeadline: LerneinheitNodeDeadline,
   deadlineIcon: DeadlineIconNode, // NEU: für das Icon im Status-Ordner
   favoritIcon: FavoritIconNode,
+  lockedIcon: LockedIconNode, // LockedIconNode registrieren
+  doneIcon: DoneIconNode, // DoneIconNode registrieren
+  startedIcon: StartedIconNode, // StartedIconNode registrieren
   category1: CategoryNode1, // NEU: categoryNode1
+  dreiGridbox: DreiGridboxNode,
+  achtzehnerGridbox: AchtzehnerGridboxNode,
+  dreißigerGridbox: DreißigerGridboxNode,
 };
 
 // Lern-Elemente automatisch generieren
@@ -68,6 +80,47 @@ const lerneinheitNodes = createGridNodes({
   parentY: gridBoxPosition.y, // NEU
 });
 
+const achtzehnerGridNodes = createGridNodes({
+  idPrefix: 'lerneinheit18',
+  rows: 6,
+  cols: 3,
+  cellWidth: 133,
+  cellHeight: 82,
+  gap: 8,
+  offsetX: 8,
+  offsetY: 8,
+  parentId: 'achtzehner-grid-box-1',
+  parentX: 3090, // gleiche X-Position wie der Container
+  parentY: 930,  // gleiche Y-Position wie der Container
+});
+
+//30 Lernheiten
+const dreißigerGridNodes = createGridNodes({
+  idPrefix: 'lerneinheit30',
+  rows: 10,
+  cols: 3,
+  cellWidth: 133,
+  cellHeight: 82,
+  gap: 8,
+  offsetX: 8,
+  offsetY: 8,
+  parentId: 'dreißiger-grid-box-1',
+  parentX: -460,
+  parentY: 1680,
+});
+
+// Status-Icons für die erste Lerneinheit setzen
+dreißigerGridNodes[0].data.statusIcons = [
+  { type: 'favorit', x: 15, y: 15 },
+  { type: 'done', x: 15, y: 50 }
+];
+// Zeilen 8, 9, 10: Index 21-23, 24-26, 27-29
+for (let idx of [21,22,23,24,25,26,27,28,29]) {
+  dreißigerGridNodes[idx].data.statusIcons = [
+    { type: 'done', x: 15, y: 15 }
+  ];
+}
+
 const initialNodes = [
   //Zeigt transparente Node im Hintergrund des GridBoxNode
   {
@@ -80,11 +133,49 @@ const initialNodes = [
       background: 'transparent',
       border: 'none',
     },
-    data: {},
+    data: {
+      statusIcons: [
+        [
+          { type: 'favorit' , x: 15, y: 15 },
+          { type: 'done', x: 15, y: 50 }
+        ],
+        ...Array(29).fill([])
+      ]
+    },
     selected: true, // Temporär auf true gesetzt, damit du den Glow siehst
   },
   ...lerneinheitNodes,
-
+  {
+    id: 'drei-grid-box-1',
+    type: 'dreiGridbox',
+    position: { x: 3050, y: 265 }, // Beispiel-Position, anpassen nach Bedarf
+    data: {},
+    selected: false,
+  },
+  {
+    id: 'achtzehner-grid-box-1',
+    type: 'achtzehnerGridbox',
+    position: { x: 3050, y: 790 }, // Beispiel-Position, anpassen nach Bedarf
+    data: {},
+    selected: false,
+  },
+  ...achtzehnerGridNodes,
+  {
+    id: 'dreißiger-grid-box-1',
+    type: 'dreißigerGridbox',
+    position: { x: -500, y: 1360 },
+    data: {
+      statusIcons: [
+        [
+          { type: 'favorit' , x: 15, y: 15 },
+          { type: 'done', x: 15, y: 50 }
+        ],
+        ...Array(29).fill([])
+      ]
+    },
+    selected: false,
+  },
+  ...dreißigerGridNodes,
 
   {
     id: 'category-top',
@@ -125,20 +216,38 @@ const initialNodes = [
   {
     id: 'deadline1',
     type: 'lerneinheitDeadline',
-    position: { x: 711, y: 706 }, // deine gewünschte Position
+    position: { x: 3070, y: 280 }, // deine gewünschte Position
     data: { property1: 'Einzel' },
   },
   {
     id: 'deadline-icon-1',
     type: 'deadlineIcon',
-    position: { x: 715, y: 710
+    position: { x: 3080, y: 300
      }, // Beispiel-Position
     data: {},
   },
   {
     id: 'favorit-icon-1',
     type: 'favoritIcon',
-    position: { x: 715, y: 733 }, // Beispiel-Position
+    position: { x: 3215, y: 840 }, // Beispiel-Position
+    data: {},
+  },
+  {
+    id: 'locked-icon-1',
+    type: 'lockedIcon',
+    position: { x: 3355, y: 815 }, // Beispiel-Position unter den anderen Icons
+    data: {},
+  },
+  {
+    id: 'done-icon-1',
+    type: 'doneIcon',
+    position: { x: 3080, y: 815 }, // Beispiel-Position unter den anderen Icons
+    data: {},
+  },
+  {
+    id: 'started-icon-1',
+    type: 'startedIcon',
+    position: { x: 3215, y: 815 }, // Beispiel-Position unter den anderen Icons
     data: {},
   },
   {
@@ -200,6 +309,33 @@ const initialEdges = [
     source: 'category-top',
     sourceHandle: 'left-source',
     target: 'grid-box-1',
+    targetHandle: 'right-target',
+    type: 'step',
+    style: { stroke: '#CFCFCF', strokeWidth: 16 },
+  },
+  {
+    id: 'edge-category-right-to-drei-grid',
+    source: 'category-right-1',
+    sourceHandle: 'right-source',
+    target: 'drei-grid-box-1',
+    targetHandle: 'left-target',
+    type: 'step',
+    style: { stroke: '#CFCFCF', strokeWidth: 16 },
+  },
+  {
+    id: 'edge-category-right-bottom-to-achtzehner-grid',
+    source: 'category-right-bottom',
+    sourceHandle: 'right-source',
+    target: 'achtzehner-grid-box-1',
+    targetHandle: 'left-target',
+    type: 'step',
+    style: { stroke: '#CFCFCF', strokeWidth: 16 },
+  },
+  {
+    id: 'edge-category-bottom-to-dreißiger-grid',
+    source: 'category-bottom',
+    sourceHandle: 'left-source',
+    target: 'dreißiger-grid-box-1',
     targetHandle: 'right-target',
     type: 'step',
     style: { stroke: '#CFCFCF', strokeWidth: 16 },

@@ -1,4 +1,11 @@
 // components/LerneinheitNode.jsx
+import FavoritIconNode from './status/FavoritIconNode';
+import DoneIconNode from './status/DoneIconNode';
+
+const iconMap = {
+  favorit: FavoritIconNode,
+  done: DoneIconNode,
+};
 
 export default function LerneinheitNode({ data }) {
     return (
@@ -17,8 +24,26 @@ export default function LerneinheitNode({ data }) {
           fontSize: 12,
           fontWeight: 'bold',
           overflow: 'hidden',
+          position: 'relative', // für absolute Icons
         }}
       >
+        {/* Status-Icons */}
+        {Array.isArray(data.statusIcons) && data.statusIcons.slice(0, 2).map((icon, i) => {
+          const IconComp = iconMap[icon.type];
+          return IconComp ? (
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                left: icon.x,
+                top: icon.y,
+                zIndex: 2,
+              }}
+            >
+              <IconComp />
+            </div>
+          ) : null;
+        })}
         {/* Medien-Icon */}
         <div
           style={{
