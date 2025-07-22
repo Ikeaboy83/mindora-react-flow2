@@ -1,6 +1,6 @@
 // components/LerneinheitNode.jsx
-import FavoritIconNode from './status/FavoritIconNode';
-import DoneIconNode from './status/DoneIconNode';
+import FavoritIconNode from '../status/FavoritIconNode';
+import DoneIconNode from '../status/DoneIconNode';
 
 const iconMap = {
   favorit: FavoritIconNode,

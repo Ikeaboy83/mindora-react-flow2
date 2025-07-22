@@ -1,23 +1,22 @@
-// linke Seite Kategorien
 import { Handle, Position } from '@xyflow/react';
 
-export default function CategoryNode1({ data }) {
+export default function CategoryNode4({ data }) {
   return (
     <div
       style={{
-        width: 640,
-        height: 640,
+        width: 278,
+        height: 278,
         borderRadius: '50%',
-        background: '#01D2BC',
-        border: '4px #01D2BC',
+        background: '#4A238D',
+        border: '4px #4A238D',
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 64,
+        fontSize: 22,
         textAlign: 'center',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        boxShadow: '0 40px 112px rgba(0, 0, 0, 0.15)',
+        boxShadow: '-10px 10px 40px rgba(0, 0, 0, 0.5265)',
         position: 'relative',
       }}
     >
@@ -30,7 +29,7 @@ export default function CategoryNode1({ data }) {
         style={{
           top: '45%',
           transform: 'translateY(-50%)',
-          background: '#01D2BC',
+          background: '#4A238D',
           border: 'transparent',
         }}
       />
@@ -55,7 +54,7 @@ export default function CategoryNode1({ data }) {
         style={{
           top: '45%',
           transform: 'translateY(-50%)',
-          background: '#01D2BC',
+          background: '#4A238D',
           border: 'transparent',
         }}
       />

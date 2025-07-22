@@ -5,19 +5,15 @@ export default function CategoryNode1({ data }) {
   return (
     <div
       style={{
-        width: 640,
-        height: 640,
+        width: 660, // 4 × 640
+        height: 660, // 4 × 640
         borderRadius: '50%',
-        background: '#01D2BC',
-        border: '4px #01D2BC',
+        background: '#FFFFFF',
+        border: '16px solid #FFFFFF', // dicker weißer Rand, passe ggf. an
         color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 64,
-        textAlign: 'center',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
-        boxShadow: '0 40px 112px rgba(0, 0, 0, 0.15)',
+        boxShadow: '-10px 10px 40px rgba(0, 0, 0, 0.5265)',
         position: 'relative',
       }}
     >
@@ -30,7 +26,7 @@ export default function CategoryNode1({ data }) {
         style={{
           top: '45%',
           transform: 'translateY(-50%)',
-          background: '#01D2BC',
+          background: 'transparent',
           border: 'transparent',
         }}
       />
@@ -55,7 +51,7 @@ export default function CategoryNode1({ data }) {
         style={{
           top: '45%',
           transform: 'translateY(-50%)',
-          background: '#01D2BC',
+          background: 'transparent',
           border: 'transparent',
         }}
       />
