@@ -1,10 +1,16 @@
 // components/LerneinheitNode.jsx
 import FavoritIconNode from '../status/FavoritIconNode';
 import DoneIconNode from '../status/DoneIconNode';
+import DeadlineIconNode from '../status/DeadlineIconNode';
+import StartedIconNode from '../status/StartedIconNode';
+import LockedIconNode from '../status/LockedIconNode';
 
 const iconMap = {
   favorit: FavoritIconNode,
   done: DoneIconNode,
+  deadline: DeadlineIconNode,
+  started: StartedIconNode,
+  locked: LockedIconNode,
 };
 
 export default function LerneinheitNode({ data }) {
@@ -13,8 +19,8 @@ export default function LerneinheitNode({ data }) {
         style={{
           width: data.width,
           height: data.height,
-          background: '#e6fefc',
-          border: '2px solid #30b89b',
+          background: data.backgroundColor || '#e6fefc',
+          border: `4px solid ${data.borderColor || '#30b89b'}`, // Individuelle Borderfarbe oder Standard, 4px breit
           borderRadius: 8,
           display: 'flex',
           flexDirection: 'column',
@@ -38,6 +44,8 @@ export default function LerneinheitNode({ data }) {
                 left: icon.x,
                 top: icon.y,
                 zIndex: 2,
+                transform: data.iconScale ? `scale(${data.iconScale})` : 'scale(1)',
+                transformOrigin: 'top left',
               }}
             >
               <IconComp />

@@ -28,10 +28,11 @@ export default function CategoryNode1({ data }) {
         position={Position.Left}
         id="left-source"
         style={{
-          top: '45%',
+          top: '50%',
           transform: 'translateY(-50%)',
-          background: '#01D2BC',
-          border: 'transparent',
+          background: 'transparent',
+          border: 'none',
+          opacity: 0.3,
         }}
       />
       <Handle
@@ -53,10 +54,11 @@ export default function CategoryNode1({ data }) {
         position={Position.Right}
         id="right-source"
         style={{
-          top: '45%',
+          top: '50%',
           transform: 'translateY(-50%)',
-          background: '#01D2BC',
-          border: 'transparent',
+          background: 'transparent',
+          border: 'none',
+          opacity: 0.3,
         }}
       />
       <Handle

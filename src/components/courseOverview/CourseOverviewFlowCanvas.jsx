@@ -3,10 +3,9 @@ import { ReactFlow, Controls, ReactFlowProvider } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 import CentralNode from './CentralNode';
-import CategoryNode from './categoryNode';
-import CategoryNodeRight from './categoryNodeRight';
 import LerneinheitNode from './LerneinheitNode';
-import GridBoxNode from './GridBoxNode';
+import NeunerGridBoxNode from './9erGridBoxNode';
+import ZwoelferGridBoxNode from './12erGridBoxNode';
 import LerneinheitNodeDeadline from './LerneinheitNodeDeadline';
 import LerneinheitNodeDeadline2 from './LerneinheitNodeDeadline2';
 import CategoryNode1 from './categoryNode1';
@@ -35,10 +34,11 @@ function AutoZoomOut() {
 
 const nodeTypes = {
   custom: CentralNode,
-  category: CategoryNode,
-  'category-right': CategoryNodeRight,
+  category: CategoryNode1,
+  'category-right': CategoryNode1,
   'lerneinheit': LerneinheitNode,
-  'gridbox': GridBoxNode,
+  'gridbox': NeunerGridBoxNode,
+  '12erGridbox': ZwoelferGridBoxNode,
   'deadline-icon': DeadlineIconNode, // bisheriger Node-Typ
   lerneinheitDeadline: LerneinheitNodeDeadline,
   lerneinheitDeadline2: LerneinheitNodeDeadline2,
@@ -67,7 +67,7 @@ const cellHeight = (containerHeight - 2 * padding - (rows - 1) * gap) / rows;
 const offsetX = padding;
 const offsetY = padding;
 
-const gridBoxPosition = { x: -480, y: 175 }; // Beispiel: beliebige Position
+const gridBoxPosition = { x: -355, y: 175 }; // Beispiel: beliebige Position
 
 const lerneinheitNodes = createGridNodes({
   rows,
@@ -77,7 +77,7 @@ const lerneinheitNodes = createGridNodes({
   gap,
   offsetX,
   offsetY,
-  parentId: 'grid-box-1',
+  parentId: 'neuner-grid-box',
   parentX: gridBoxPosition.x, // NEU
   parentY: gridBoxPosition.y, // NEU
 });
@@ -107,8 +107,8 @@ const dreißigerGridNodes = createGridNodes({
   offsetX: 8,
   offsetY: 8,
   parentId: 'dreißiger-grid-box-1',
-  parentX: -460,
-  parentY: 1680,
+  parentX: -385,
+  parentY: 1675,
 });
 
 // Status-Icons für die erste Lerneinheit setzen
@@ -123,10 +123,98 @@ for (let idx of [21,22,23,24,25,26,27,28,29]) {
   ];
 }
 
+//12 Lernheiten für das 12er-Grid
+const zwoelferGridNodes = createGridNodes({
+  idPrefix: 'lerneinheit12',
+  rows: 3,
+  cols: 4,
+  cellWidth: 110,
+  cellHeight: 82,
+  gap: 16, // Vergrößert von 8px auf 16px
+  offsetX: 8,
+  offsetY: 8,
+  parentId: '12er-grid-box-1',
+  parentX: -426, // weitere 2px nach rechts verschoben
+  parentY: 926,  // 5px nach unten verschoben
+});
+
+// Individuelle Borderfarben und Status-Icons für Lerneinheiten im 12er-Grid
+zwoelferGridNodes[0].data.borderColor = '#00D58A'; // Done-Icon Farbe für erste Lerneinheit
+zwoelferGridNodes[0].data.statusIcons = [
+  { type: 'favorit', x: 4, y: 15 },
+  { type: 'done', x: 56, y: 15 }
+];
+zwoelferGridNodes[0].data.iconScale = 2.4; // Icons 2,4x so groß
+
+zwoelferGridNodes[1].data.borderColor = '#2B7FFF'; // Deadline-Icon Farbe für zweite Lerneinheit
+zwoelferGridNodes[1].data.statusIcons = [
+  { type: 'deadline', x: 30, y: 15 }
+];
+zwoelferGridNodes[1].data.iconScale = 2.4; // Icons 2,4x so groß
+
+zwoelferGridNodes[2].data.borderColor = '#2B7FFF'; // Deadline-Icon Farbe für dritte Lerneinheit
+zwoelferGridNodes[2].data.statusIcons = [
+  { type: 'deadline', x: 4, y: 15 },
+  { type: 'favorit', x: 56, y: 15 }
+];
+zwoelferGridNodes[2].data.iconScale = 2.4; // Icons 2,4x so groß
+
+zwoelferGridNodes[3].data.borderColor = '#FFB800'; // Neue Farbe für vierte Lerneinheit
+zwoelferGridNodes[3].data.statusIcons = [
+  { type: 'started', x: 4, y: 15 },
+  { type: 'favorit', x: 56, y: 15 }
+];
+zwoelferGridNodes[3].data.iconScale = 2.4; // Icons 2,4x so groß
+
+// Lerneinheiten 5-8 mit schwarzer Border und Lock-Icon zentral
+zwoelferGridNodes[4].data.borderColor = '#8E98A7'; // Grau für fünfte Lerneinheit
+zwoelferGridNodes[4].data.statusIcons = [
+  { type: 'locked', x: 30, y: 15 }
+];
+zwoelferGridNodes[4].data.iconScale = 2.4; // Icons 2,4x so groß
+
+zwoelferGridNodes[5].data.borderColor = '#8E98A7'; // Grau für sechste Lerneinheit
+zwoelferGridNodes[5].data.statusIcons = [
+  { type: 'locked', x: 30, y: 15 }
+];
+zwoelferGridNodes[5].data.iconScale = 2.4; // Icons 2,4x so groß
+
+zwoelferGridNodes[6].data.borderColor = '#000000'; // Schwarz für siebte Lerneinheit
+zwoelferGridNodes[7].data.borderColor = '#000000'; // Schwarz für achte Lerneinheit
+
+// Lerneinheiten 9-12 (untere Reihe) mit Done-Icon mittig und Done-Icon-Farbe Border und Background
+zwoelferGridNodes[8].data.borderColor = '#00D58A'; // Done-Icon Farbe (Lerneinheit 9)
+zwoelferGridNodes[8].data.backgroundColor = '#00D58A'; // Done-Icon Farbe Background
+zwoelferGridNodes[8].data.statusIcons = [
+  { type: 'done', x: 30, y: 15 }
+];
+zwoelferGridNodes[8].data.iconScale = 2.4; // Icons 2,4x so groß
+
+zwoelferGridNodes[9].data.borderColor = '#00D58A'; // Done-Icon Farbe (Lerneinheit 10)
+zwoelferGridNodes[9].data.backgroundColor = '#00D58A'; // Done-Icon Farbe Background
+zwoelferGridNodes[9].data.statusIcons = [
+  { type: 'done', x: 30, y: 15 }
+];
+zwoelferGridNodes[9].data.iconScale = 2.4; // Icons 2,4x so groß
+
+zwoelferGridNodes[10].data.borderColor = '#00D58A'; // Done-Icon Farbe (Lerneinheit 11)
+zwoelferGridNodes[10].data.backgroundColor = '#00D58A'; // Done-Icon Farbe Background
+zwoelferGridNodes[10].data.statusIcons = [
+  { type: 'done', x: 30, y: 15 }
+];
+zwoelferGridNodes[10].data.iconScale = 2.4; // Icons 2,4x so groß
+
+zwoelferGridNodes[11].data.borderColor = '#00D58A'; // Done-Icon Farbe (Lerneinheit 12)
+zwoelferGridNodes[11].data.backgroundColor = '#00D58A'; // Done-Icon Farbe Background
+zwoelferGridNodes[11].data.statusIcons = [
+  { type: 'done', x: 30, y: 15 }
+];
+zwoelferGridNodes[11].data.iconScale = 2.4; // Icons 2,4x so groß
+
 const initialNodes = [
   //Zeigt transparente Node im Hintergrund des GridBoxNode
   {
-    id: 'grid-box-1',
+    id: 'neuner-grid-box',
     type: 'gridbox',
     position: gridBoxPosition,
     style: {
@@ -150,7 +238,7 @@ const initialNodes = [
   {
     id: 'drei-grid-box-1',
     type: 'dreiGridbox',
-    position: { x: 3050, y: 265 }, // Beispiel-Position, anpassen nach Bedarf
+    position: { x: 3050, y: 262 }, // Beispiel-Position, anpassen nach Bedarf
     data: {},
     selected: false,
   },
@@ -165,7 +253,7 @@ const initialNodes = [
   {
     id: 'dreißiger-grid-box-1',
     type: 'dreißigerGridbox',
-    position: { x: -500, y: 1360 },
+    position: { x: -425, y: 1357 },
     data: {
       statusIcons: [
         [
@@ -178,13 +266,14 @@ const initialNodes = [
     selected: false,
   },
   ...dreißigerGridNodes,
-
   {
-    id: 'category-top',
-    type: 'category',
-    position: { x: 150, y: -5 },
-    data: { label: '1.\nEINFÜHRUNG' },
+    id: '12er-grid-box-1',
+    type: '12erGridbox',
+    position: { x: -500, y: 917 },
+    data: {},
   },
+  ...zwoelferGridNodes,
+
   {
     id: 'central-node',
     type: 'custom',
@@ -192,27 +281,33 @@ const initialNodes = [
     data: { label: 'AGILES\nPROJEKT-\nMANAGEMENT' },
   },
   {
-    id: 'category-middle',
+    id: 'category-left-top',
     type: 'category',
-    position: { x: 150, y: 750 },
+    position: { x: 150, y: -5 },
+    data: { label: '1.\nEINFÜHRUNG' },
+  },
+  {
+    id: 'category-left-middle',
+    type: 'category',
+    position: { x: 150, y: 753 },
     data: { label: '2. METHODE & FRAMEWORKS' },
   },
   {
-    id: 'category-bottom',
+    id: 'category-left-bottom',
     type: 'category',
     position: { x: 150, y: 1500 },
     data: { label: '3. PROZESS' },
   },
   {
-    id: 'category-right-1',
+    id: 'category-right-top',
     type: 'category-right',
     position: { x: 2300, y: 0 },
     data: { label: '4. TOOLS & TECH' },
   },
   {
-    id: 'category-right-bottom',
+    id: 'category-right-middle',
     type: 'category-right',
-    position: { x: 2300, y: 750 },
+    position: { x: 2300, y: 753 },
     data: { label: '5.\nROLLEN' },
   },
   {
@@ -224,7 +319,7 @@ const initialNodes = [
   {
     id: 'deadline2',
     type: 'lerneinheitDeadline2',
-    position: { x: 3200, y: 400 }, // Position neben dem ersten
+    position: { x: 3210, y: 280 }, // Position neben dem ersten
     data: { 
       property1: 'Einzel ohne Glow',
       width: 109,
@@ -262,12 +357,6 @@ const initialNodes = [
     position: { x: 3215, y: 815 }, // Beispiel-Position unter den anderen Icons
     data: {},
   },
-  {
-    id: 'category1-test',
-    type: 'category1',
-    position: { x: 800, y: 0 },
-    data: { label: 'Neue Kategorie' },
-  },
 ];
 
 const initialEdges = [
@@ -275,7 +364,7 @@ const initialEdges = [
     id: 'edge-1',
     source: 'central-node',
     sourceHandle: 'left-source',
-    target: 'category-top',
+    target: 'category-left-top',
     targetHandle: 'right-target',
     type: 'step',
     style: { stroke: '#C1C1C1', strokeWidth: 24 },
@@ -284,7 +373,7 @@ const initialEdges = [
     id: 'edge-2',
     source: 'central-node',
     sourceHandle: 'left-source',
-    target: 'category-middle',
+    target: 'category-left-middle',
     targetHandle: 'right-target',
     type: 'step',
     style: { stroke: '#C1C1C1', strokeWidth: 24 },
@@ -293,7 +382,7 @@ const initialEdges = [
     id: 'edge-3',
     source: 'central-node',
     sourceHandle: 'left-source',
-    target: 'category-bottom',
+    target: 'category-left-bottom',
     targetHandle: 'right-target',
     type: 'step',
     style: { stroke: '#C1C1C1', strokeWidth: 24 },
@@ -302,7 +391,7 @@ const initialEdges = [
     id: 'edge-4',
     source: 'central-node',
     sourceHandle: 'right-source',
-    target: 'category-right-1',
+    target: 'category-right-top',
     targetHandle: 'left-target',
     type: 'step',
     style: { stroke: '#C1C1C1', strokeWidth: 24 },
@@ -311,23 +400,23 @@ const initialEdges = [
     id: 'edge-5',
     source: 'central-node',
     sourceHandle: 'right-source',
-    target: 'category-right-bottom',
+    target: 'category-right-middle',
     targetHandle: 'left-target',
     type: 'step',
     style: { stroke: '#C1C1C1', strokeWidth: 24 },
   },
   {
     id: 'edge-category-top-to-grid',
-    source: 'category-top',
+    source: 'category-left-top',
     sourceHandle: 'left-source',
-    target: 'grid-box-1',
+    target: 'neuner-grid-box',
     targetHandle: 'right-target',
     type: 'step',
     style: { stroke: '#CFCFCF', strokeWidth: 16 },
   },
   {
     id: 'edge-category-right-to-drei-grid',
-    source: 'category-right-1',
+    source: 'category-right-top',
     sourceHandle: 'right-source',
     target: 'drei-grid-box-1',
     targetHandle: 'left-target',
@@ -336,7 +425,7 @@ const initialEdges = [
   },
   {
     id: 'edge-category-right-bottom-to-achtzehner-grid',
-    source: 'category-right-bottom',
+    source: 'category-right-middle',
     sourceHandle: 'right-source',
     target: 'achtzehner-grid-box-1',
     targetHandle: 'left-target',
@@ -345,9 +434,18 @@ const initialEdges = [
   },
   {
     id: 'edge-category-bottom-to-dreißiger-grid',
-    source: 'category-bottom',
+    source: 'category-left-bottom',
     sourceHandle: 'left-source',
     target: 'dreißiger-grid-box-1',
+    targetHandle: 'right-target',
+    type: 'step',
+    style: { stroke: '#CFCFCF', strokeWidth: 16 },
+  },
+  {
+    id: 'edge-category-left-middle-to-12er-grid',
+    source: 'category-left-middle',
+    sourceHandle: 'left-source',
+    target: '12er-grid-box-1',
     targetHandle: 'right-target',
     type: 'step',
     style: { stroke: '#CFCFCF', strokeWidth: 16 },

@@ -12,8 +12,8 @@ const lightenHexColor = (hex, amount) => {
     (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
 };
 
-//GridBoxNode.jsx - styled den rechtigen Kasten als Hintergrund der Lerneinheiten
-export default function GridBoxNode({ data, selected }) {
+//9erGridBoxNode.jsx - styled den Kasten für 9 Lerneinheiten (3x3 Grid)
+export default function NeunerGridBoxNode({ data, selected }) {
     const glowColor = '#00aaff'; // Ursprüngliches kräftiges Blau
     
     const nodeStyle = {
