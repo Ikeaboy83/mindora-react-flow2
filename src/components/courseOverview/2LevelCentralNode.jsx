@@ -1,27 +1,29 @@
-// linke Seite Kategorien
+import React from 'react';
 import { Handle, Position } from '@xyflow/react';
 
-export default function CategoryNode1({ data }) {
+export default function TwoLevelCentralNode({ data }) {
   return (
     <div
+      className="course-overview-node"
       style={{
-        width: 640,
-        height: 640,
+        width: 9876, // 25% kleiner (13168 * 0.75)
+        height: 9876, // 25% kleiner (13168 * 0.75)
         borderRadius: '50%',
         background: '#01D2BC',
-        border: '4px #01D2BC',
+        border: '80px solid #01D2BC',
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 64,
+        fontSize: '900px', // 25% kleiner (1200 * 0.75)
         textAlign: 'center',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        boxShadow: '0 40px 112px rgba(0, 0, 0, 0.15)',
+        boxShadow: '0 520px 1560px rgba(0, 0, 0, 0.15)',
         position: 'relative',
       }}
     >
-      {data?.label ?? "Kein Label"}
+      {data?.label ?? "2L CENTRAL"}
+      
       {/* Links: Source und Target */}
       <Handle
         type="source"

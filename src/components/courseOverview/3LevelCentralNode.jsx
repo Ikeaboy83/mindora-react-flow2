@@ -1,7 +1,7 @@
 import { Handle, Position } from '@xyflow/react';
 import { useEffect } from 'react';
 
-export default function CentralNode({ data }) {
+export default function ThreeLevelCentralNode({ data }) {
   function usePinchPassThrough() {
     useEffect(() => {
       function handleTouchStart(e) {
@@ -31,22 +31,23 @@ export default function CentralNode({ data }) {
 
   return (
     <div
-    style={{
-      width: 880,
-      height: 880,
-      borderRadius: '50%',
-      background: '#01D2BC',
-      border: '4px solid #01D2BC',
-      color: '#fff',
-      fontWeight: 'bold',
-      fontSize: 72,
-      textAlign: 'center',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      boxShadow: '0 48px 144px rgba(0, 0, 0, 0.35)',
-      position: 'relative',
-    }}
+      className="course-overview-node"
+      style={{
+        width: 880,
+        height: 880,
+        borderRadius: '50%',
+        background: '#01D2BC',
+        border: '4px solid #01D2BC',
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 72,
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 48px 144px rgba(0, 0, 0, 0.35)',
+        position: 'relative',
+      }}
     >
       {data.label}
       <Handle

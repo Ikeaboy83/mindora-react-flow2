@@ -45,7 +45,7 @@ export function createGridNodes({
           x: parentX + centerOffsetX + x, // Zentriert
           y: parentY + centerOffsetY + y, // Zentriert
         },
-        parentNode: parentId,
+        parentId: parentId,
         extent: 'parent',
         data: {
           title: `LE ${row * cols + col + 1}`,
@@ -57,4 +57,121 @@ export function createGridNodes({
   }
 
   return nodes;
+}
+
+/**
+ * Berechnet die Position für ein Grid-Item basierend auf seiner Position im Grid
+ * @param {Object} container - Der Grid-Container Node
+ * @param {number} gridX - X-Position im Grid (0-basiert)
+ * @param {number} gridY - Y-Position im Grid (0-basiert)
+ * @returns {Object} Position {x, y} für das Item
+ */
+export function calculateGridItemPosition(container, gridX, gridY) {
+  const { data, position: containerPos } = container;
+  const { cellWidth, cellHeight, gap, padding } = data;
+  
+  const x = containerPos.x + padding + gridX * (cellWidth + gap);
+  const y = containerPos.y + padding + gridY * (cellHeight + gap);
+  
+  return { x, y };
+}
+
+/**
+ * Erstellt ein Grid-Layout mit automatisch positionierten Items
+ * @param {Object} container - Der Grid-Container Node
+ * @param {Array} items - Array von Grid-Items mit gridX, gridY Eigenschaften
+ * @returns {Array} Array von Nodes mit korrekten Positionen
+ */
+export function createGridLayout(container, items) {
+  return items.map((item, index) => {
+    const position = calculateGridItemPosition(container, item.gridX, item.gridY);
+    
+    return {
+      ...item,
+      position,
+      parentId: container.id,
+    };
+  });
+}
+
+/**
+ * Validiert ob ein Grid-Item in den Container passt
+ * @param {Object} container - Der Grid-Container Node
+ * @param {Object} item - Das Grid-Item
+ * @param {number} gridX - X-Position im Grid
+ * @param {number} gridY - Y-Position im Grid
+ * @returns {boolean} true wenn das Item passt
+ */
+export function validateGridItemPlacement(container, item, gridX, gridY) {
+  const { data } = container;
+  const { columns, rows, cellWidth, cellHeight } = data;
+  
+  // Prüfe ob Position im Grid liegt
+  if (gridX < 0 || gridX >= columns || gridY < 0 || gridY >= rows) {
+    return false;
+  }
+  
+  // Prüfe ob Item-Dimensionen in die Zelle passen
+  if (item.data.width > cellWidth || item.data.height > cellHeight) {
+    return false;
+  }
+  
+  return true;
+}
+
+/**
+ * Erstellt einen Grid-Container mit Standard-Einstellungen
+ * @param {string} id - Eindeutige ID
+ * @param {Object} position - Position {x, y}
+ * @param {Object} options - Optionale Einstellungen
+ * @returns {Object} Grid-Container Node
+ */
+export function createGridContainer(id, position, options = {}) {
+  const defaults = {
+    columns: 3,
+    rows: 1,
+    cellWidth: 200,
+    cellHeight: 150,
+    gap: 20,
+    padding: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderColor: '#30b89b',
+    showGridLines: true,
+    showCellPlaceholders: false,
+  };
+  
+  return {
+    id,
+    type: 'gridContainer',
+    position,
+    data: { ...defaults, ...options },
+  };
+}
+
+/**
+ * Erstellt ein Grid-Item mit Standard-Einstellungen
+ * @param {string} id - Eindeutige ID
+ * @param {string} title - Titel des Items
+ * @param {number} gridX - X-Position im Grid
+ * @param {number} gridY - Y-Position im Grid
+ * @param {Object} options - Optionale Einstellungen
+ * @returns {Object} Grid-Item Node
+ */
+export function createGridItem(id, title, gridX, gridY, options = {}) {
+  const defaults = {
+    title,
+    width: 200,
+    height: 150,
+    status: 'default',
+    progress: 0,
+    showIcon: false,
+  };
+  
+  return {
+    id,
+    type: 'gridItem',
+    gridX,
+    gridY,
+    data: { ...defaults, ...options },
+  };
 }

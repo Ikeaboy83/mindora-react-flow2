@@ -15,6 +15,7 @@ import NotificationBadge4 from './notificationBadge4';
 import NotificationBadge5 from './notificationBadge5';
 import DeadlineIconNode from './DeadlineIconNode';
 
+
 export default function HomeFlowCanvas({ onSwitchToCourse }) {
   const nodeTypes = {
     centralCircle: CentralCircle,
@@ -30,11 +31,12 @@ export default function HomeFlowCanvas({ onSwitchToCourse }) {
     notificationBadge4: NotificationBadge4,
     notificationBadge5: NotificationBadge5,
     deadlineIcon: DeadlineIconNode,
+
   };
   const nodes = [
     { id: '1', type: 'centralCircle', position: { x: 700, y: 130 }, data: { label: 'Home Start' } },
     { id: '2', type: 'topCategory1', position: { x: 620, y: 100 }, data: { label: 'CLAIM MANAGEMENT' } },
-    { id: '3', type: 'topCategory2', position: { x: 620, y: 350 }, data: { label: 'AGILES\nPROJEKT-\nMANAGEMENT' } },
+    { id: '3', type: 'topCategory2', position: { x: 620, y: 350 }, data: { label: 'LEADERSHIP & TEAMS' } },
     { id: '4', type: 'topCategory3', position: { x: 600, y: 600 }, data: { label: 'BUSINESS ADMINISTRATION' } },
     { id: '5', type: 'topCategory4', position: { x: 1250, y: 165 }, data: { label: 'HUMAN RESOURCES' } },
     { id: '6', type: 'topCategory5', position: { x: 1250, y: 490 }, data: { label: 'LEADERSHIP & COMMUNICATION' } },
@@ -44,7 +46,9 @@ export default function HomeFlowCanvas({ onSwitchToCourse }) {
     { id: '8', type: 'notificationBadge2', position: { x: 790, y: 370 }, data: { label: '25/81' } },
     { id: '11', type: 'notificationBadge3', position: { x: 800, y: 620 }, data: { label: '8/15' } },
     { id: '12', type: 'notificationBadge4', position: { x: 1460, y: 185 }, data: { label: '89/212' } },
-    { id: '13', type: 'notificationBadge5', position: { x: 1460, y: 510 }, data: { label: '146/247' } }
+    { id: '13', type: 'notificationBadge5', position: { x: 1460, y: 510 }, data: { label: '146/247' } },
+    
+
   ];
   const edges = [];
 
