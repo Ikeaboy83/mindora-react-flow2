@@ -47,6 +47,19 @@ export default function KrankikomgebaeudeNode({ data }) {
           bottom: -6,
         }}
       />
+      {/* Rechter Handle für Container-Verbindungen */}
+      <Handle
+        type="target"
+        position={Position.Right}
+        id="right-target"
+        style={{
+          background: 'transparent',
+          border: 'none',
+          width: 12,
+          height: 12,
+          right: -6,
+        }}
+      />
     </div>
   );
 } 
