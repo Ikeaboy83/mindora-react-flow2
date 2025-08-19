@@ -1,26 +1,8 @@
-/* Touch-Events für alle React Flow Nodes deaktivieren */
-.react-flow__node {
-  touch-action: none !important;
-  user-select: none !important;
-  pointer-events: none !important;
+/* Nur die notwendigen Touch-Events-Einstellungen */
+.react-flow__pane {
+  touch-action: manipulation !important;
 }
 
-.react-flow__node * {
-  touch-action: none !important;
-  user-select: none !important;
-  pointer-events: none !important;
-}
-
-/* Touch-Events für den React Flow Container aktivieren */
 .react-flow__viewport {
   touch-action: manipulation !important;
-}
-
-.react-flow__pane {
-  touch-action: manipulation !important;
-}
-
-/* Zoom-Gesten explizit aktivieren */
-.react-flow__pane {
-  touch-action: pinch-zoom !important;
 }

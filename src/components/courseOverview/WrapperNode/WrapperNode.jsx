@@ -14,9 +14,9 @@ export function FirstWrapperNode({ data }) {
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        touchAction: 'none', // Touch-Events deaktivieren
+        touchAction: 'manipulation', // Touch-Events für Zoom erlauben
         userSelect: 'none', // Text-Auswahl verhindern
-        pointerEvents: 'none', // Alle Pointer-Events deaktivieren
+        pointerEvents: 'auto', // Pointer-Events erlauben
       }}
     >
       {/* Oberer Bereich: Container für den Inhalt */}
@@ -129,9 +129,9 @@ export function SecondWrapperNode({ data }) {
         display: 'flex',
         flexDirection: 'column',
         zIndex: 1, // Niedriger als Edges
-        touchAction: 'none', // Touch-Events deaktivieren
+        touchAction: 'manipulation', // Touch-Events für Zoom erlauben
         userSelect: 'none', // Text-Auswahl verhindern
-        pointerEvents: 'none', // Alle Pointer-Events deaktivieren
+        pointerEvents: 'auto', // Pointer-Events erlauben
       }}
     >
       {/* Oberer Bereich: Container für die Course Overview */}
