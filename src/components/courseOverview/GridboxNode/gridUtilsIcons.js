@@ -590,11 +590,11 @@ export const createSixGridLerneinheitenWithIcons = (lerneinheiten, iconType = 'd
  * @returns {Array} Array mit 5 Learning Units OHNE Icons
  */
 export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'doneIcon', imageSources = {}) => {
-  // Container-Dimensionen: 57600 x 28800 (20% kleiner als vorher)
+  // Container-Dimensionen: 57600 x 28800 (ursprüngliche Größe)
   const containerWidth = 57600;
   const containerHeight = 28800;
   
-  // Skalierungsfaktor für Lerneinheiten berechnen (20% kleiner)
+  // Skalierungsfaktor für Lerneinheiten berechnen (ursprüngliche Größe)
   const scaleFactor = 0.96; // 20% kleiner als vorher (72000 * 0.8 = 57600)
   
   // Zellen-Dimensionen berechnen (3 Spalten, 2 Zeilen)
@@ -794,26 +794,53 @@ export const calculateSixGridDoubleIconPositions = (lerneinheitPosition, lernein
  */
 export const createSixGridLerneinheitenWithDoubleIcons = (lerneinheiten, leftIconType = 'favoritIcon', rightIconType = 'doneIcon') => {
   return lerneinheiten.map(lerneinheit => {
-    // Icon-Größe für Zentrierung berechnen (Standard: 20px)
-    const iconWidth = 6000;
-    const iconHeight = 6000;
+    // EXAKT die gleiche Logik wie im 9er-Grid verwenden:
+    // 1. Berechne die tatsächliche gerenderte Icon-Größe basierend auf der Lerneinheit-Skalierung
+    const lerneinheitWidth = lerneinheit.data.width;
+    const lerneinheitHeight = lerneinheit.data.height;
     
-    // Icon-Objekte mit relativen Positionen UND Icon-Zentrierung erstellen
-    // EXAKT die gleiche Logik wie im 9er-Grid: relative Position minus 50% der Icon-Größe
+    // Ursprüngliche Standard-Größe: 18000x12000
+    const originalWidth = 18000;
+    const originalHeight = 12000;
+    
+    // Berechne den Skalierungsfaktor (gleiche Logik wie im 9er-Grid)
+    const scaleRatio = Math.min(lerneinheitWidth / originalWidth, lerneinheitHeight / originalHeight);
+    
+    // Berechne die tatsächliche Icon-Größe nach Skalierung (20px × 300 × scaleRatio)
+    const actualIconSize = 20 * 300 * scaleRatio; // 6000px × scaleRatio
+    
+    // 2. Verwende calculateSingleIconPosition für korrekte Icon-Zentrierung (gleiche Logik wie im 9er-Grid)
+    const leftIconPosition = calculateSingleIconPosition(
+      { x: 0.25, y: 0.3 }, // Relative Position: 25% Breite, 30% Höhe der Lerneinheit
+      lerneinheitWidth,      // Lerneinheit-Breite
+      lerneinheitHeight,     // Lerneinheit-Höhe
+      actualIconSize,        // Icon-Breite (echte gerenderte Größe)
+      actualIconSize         // Icon-Höhe (echte gerenderte Größe)
+    );
+    
+    const rightIconPosition = calculateSingleIconPosition(
+      { x: 0.75, y: 0.3 }, // Relative Position: 75% Breite, 30% Höhe der Lerneinheit
+      lerneinheitWidth,      // Lerneinheit-Breite
+      lerneinheitHeight,     // Lerneinheit-Höhe
+      actualIconSize,        // Icon-Breite (echte gerenderte Größe)
+      actualIconSize         // Icon-Höhe (echte gerenderte Größe)
+    );
+    
+    // 3. Icon-Objekte mit korrekter Positionierung erstellen (gleiche Struktur wie im 9er-Grid)
     const statusIcons = [
       {
         type: leftIconType,
-        x: 0.25 - (iconWidth * 0.5) / lerneinheit.data.width, // 25% minus 50% der Icon-Breite (zentriert)
-        y: 0.3 - (iconHeight * 0.5) / lerneinheit.data.height,  // 30% minus 50% der Icon-Höhe (zentriert)
-        offsetX: 0, // Kein zusätzlicher Offset
-        offsetY: 0
+        x: leftIconPosition.centerIcon.x,
+        y: leftIconPosition.centerIcon.y,
+        offsetX: leftIconPosition.calculations.offsetX,
+        offsetY: leftIconPosition.calculations.offsetY
       },
       {
         type: rightIconType,
-        x: 0.75 - (iconWidth * 0.5) / lerneinheit.data.width, // 75% minus 50% der Icon-Breite (zentriert)
-        y: 0.3 - (iconHeight * 0.5) / lerneinheit.data.height,  // 30% minus 50% der Icon-Höhe (zentriert)
-        offsetX: 0, // Kein zusätzlicher Offset
-        offsetY: 0
+        x: rightIconPosition.centerIcon.x,
+        y: rightIconPosition.centerIcon.y,
+        offsetX: rightIconPosition.calculations.offsetX,
+        offsetY: rightIconPosition.calculations.offsetY
       }
     ];
     

@@ -100,6 +100,11 @@ function FlowApp() {
         panOnDrag={true}
         zoomOnScroll={true}
         panOnScroll={false}
+        zoomOnDoubleClick={true}
+        preventScrolling={false}
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
+        onTouchEnd={(e) => e.stopPropagation()}
       >
         <Controls
           style={{

@@ -14,6 +14,9 @@ export default function StartedIconNode() {
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 1,
+        touchAction: 'none', // Touch-Events deaktivieren
+        userSelect: 'none', // Text-Auswahl verhindern
+        pointerEvents: 'none', // Alle Pointer-Events deaktivieren
       }}
     >
       <img src={startedIcon} alt="Started" width={15} height={15} />

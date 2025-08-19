@@ -1,6 +1,7 @@
 // src/components/home/HomeFlowCanvas.jsx
 import { ReactFlow, ReactFlowProvider, Controls } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import './HomeFlowCanvas.css';
 import CentralCircle from './centralCircle';
 import TopCategory1 from './topCategory1';
 import TopCategory2 from './topCategory2';
@@ -61,6 +62,15 @@ export default function HomeFlowCanvas({ onSwitchToCourse }) {
           nodeTypes={nodeTypes}
           minZoom={0.01}
           maxZoom={8}
+          zoomOnPinch={true}
+          panOnDrag={true}
+          zoomOnScroll={true}
+          panOnScroll={false}
+          zoomOnDoubleClick={true}
+          preventScrolling={false}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+          onTouchEnd={(e) => e.stopPropagation()}
         >
           <Controls />
           <button onClick={onSwitchToCourse}>

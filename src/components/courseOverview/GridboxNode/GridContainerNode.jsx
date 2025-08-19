@@ -159,6 +159,8 @@ export default function GridContainerNode({ data, selected, id }) {
       : '0 400px 1600px rgba(0, 0, 0, 0.2)',
     transition: 'all 0.3s ease',
     position: 'relative',
+    touchAction: 'none', // Touch-Events deaktivieren
+    userSelect: 'none', // Text-Auswahl verhindern
   };
 
   return (

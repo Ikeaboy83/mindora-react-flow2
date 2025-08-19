@@ -135,6 +135,9 @@ export default function LerneinheitNode({ data }) {
         fontWeight: 'bold',
         overflow: 'hidden',
         position: 'relative', // für absolute Icons
+        touchAction: 'none', // Touch-Events deaktivieren
+        userSelect: 'none', // Text-Auswahl verhindern
+        pointerEvents: 'none', // Alle Pointer-Events deaktivieren
       }}
     >
                  {/* Status-Icons mit dynamischer Skalierung */}
@@ -160,7 +163,9 @@ export default function LerneinheitNode({ data }) {
                  zIndex: 2,
                  transform: `scale(${dynamicIconScale})`, // Dynamische Skalierung
                  transformOrigin: 'top left',
-                 pointerEvents: 'auto', // Icons klickbar machen
+                 pointerEvents: 'none', // Touch-Events deaktivieren
+                 touchAction: 'none', // Touch-Events deaktivieren
+                 userSelect: 'none', // Text-Auswahl verhindern
                }}
              >
                <IconComp />
