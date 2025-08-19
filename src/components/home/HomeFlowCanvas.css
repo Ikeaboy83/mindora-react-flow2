@@ -1,8 +1,4 @@
-/* Nur die notwendigen Touch-Events-Einstellungen */
+/* Einfache Touch-Events-Aktivierung für React Flow */
 .react-flow__pane {
-  touch-action: manipulation !important;
-}
-
-.react-flow__viewport {
   touch-action: manipulation !important;
 }

@@ -588,7 +588,7 @@ export const getContainerDimensions = (containerId) => {
     case '9erContainer-1-level-1':
       return { width: 60000, height: 45000 }; // Standard-Größe für bessere Sichtbarkeit
     case '6erContainer-1-level-1':
-      return { width: 57600, height: 28800 }; // 6er-Container: ursprüngliche Größe (72000 * 0.8 = 57600, 36000 * 0.8 = 28800)
+      return { width: 1152, height: 576 }; // 6er-Container: um das 5fache verkleinert (5760/5 = 1152, 2880/5 = 576)
     default:
       return { width: 60000, height: 45000 }; // Standard-Größe
   }

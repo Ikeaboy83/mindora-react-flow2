@@ -13,9 +13,8 @@ export default function DoneIconNode() {
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 1,
-        touchAction: 'manipulation', // Touch-Events für Zoom erlauben
+        touchAction: 'none', // Touch-Events deaktivieren
         userSelect: 'none', // Text-Auswahl verhindern
-        pointerEvents: 'auto', // Pointer-Events erlauben
       }}
     >
       <img src={doneIcon} alt="Done" width={15} height={15} />

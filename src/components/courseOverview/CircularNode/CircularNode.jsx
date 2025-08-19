@@ -77,9 +77,8 @@ export default function CircularNode({ data }) {
         justifyContent: 'center',
         boxShadow: config.boxShadow,
         position: 'relative',
-        touchAction: 'manipulation', // Touch-Events für Zoom erlauben
+        touchAction: 'none', // Touch-Events deaktivieren
         userSelect: 'none', // Text-Auswahl verhindern
-        pointerEvents: 'auto', // Pointer-Events erlauben
         ...customStyle
       }}
     >

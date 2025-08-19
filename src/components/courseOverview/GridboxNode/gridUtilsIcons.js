@@ -590,12 +590,12 @@ export const createSixGridLerneinheitenWithIcons = (lerneinheiten, iconType = 'd
  * @returns {Array} Array mit 5 Learning Units OHNE Icons
  */
 export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'doneIcon', imageSources = {}) => {
-  // Container-Dimensionen: 57600 x 28800 (ursprüngliche Größe)
-  const containerWidth = 57600;
-  const containerHeight = 28800;
+  // Container-Dimensionen: 5760 x 2880 (um das 10fache verkleinert)
+  const containerWidth = 5760;
+  const containerHeight = 2880;
   
-  // Skalierungsfaktor für Lerneinheiten berechnen (ursprüngliche Größe)
-  const scaleFactor = 0.96; // 20% kleiner als vorher (72000 * 0.8 = 57600)
+  // Skalierungsfaktor für Lerneinheiten berechnen (um das 10fache verkleinert)
+  const scaleFactor = 0.1; // 5760/57600 = 0.1 (um das 10fache verkleinert)
   
   // Zellen-Dimensionen berechnen (3 Spalten, 2 Zeilen)
   const cellWidth = containerWidth / 3;
@@ -614,11 +614,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 1',
-        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
-        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
+        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
+        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
         imageSource: imageSources.pic1 || 'pic1',
       },
     },
@@ -633,11 +633,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 2',
-        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
-        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
+        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
+        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
         imageSource: imageSources.pic2 || 'pic2',
       },
     },
@@ -652,11 +652,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 3',
-        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
-        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
+        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
+        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
         imageSource: imageSources.pic3 || 'pic3',
       },
     },
@@ -671,11 +671,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 4',
-        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
-        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
+        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
+        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
         imageSource: imageSources.pic4 || 'pic4',
       },
     },
@@ -690,11 +690,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 5',
-        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
-        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
+        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
+        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
         imageSource: imageSources.pic5 || 'pic5',
       },
     }

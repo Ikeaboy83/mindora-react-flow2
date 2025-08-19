@@ -15,9 +15,8 @@ export default function CategoryNode1({ data }) {
         justifyContent: 'center',
         boxShadow: '-10px 10px 40px rgba(0, 0, 0, 0.5265)',
         position: 'relative',
-        touchAction: 'manipulation', // Touch-Events für Zoom erlauben
+        touchAction: 'none', // Touch-Events deaktivieren
         userSelect: 'none', // Text-Auswahl verhindern
-        pointerEvents: 'auto', // Pointer-Events erlauben
       }}
     >
       {data?.label ?? "Kein Label"}

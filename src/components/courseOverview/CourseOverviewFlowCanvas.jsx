@@ -102,22 +102,6 @@ function FlowApp() {
         panOnScroll={false}
         zoomOnDoubleClick={true}
         preventScrolling={false}
-        onTouchStart={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-        }}
-        onTouchMove={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-        }}
-        onTouchEnd={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-        }}
-        onTouchCancel={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-        }}
       >
         <Controls
           style={{
