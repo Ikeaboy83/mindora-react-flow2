@@ -149,8 +149,7 @@ export default function GridContainerNode({ data, selected, id }) {
       : '0 400px 1600px rgba(0, 0, 0, 0.2)',
     transition: 'all 0.3s ease',
     position: 'relative',
-    // React Flow Touch-Gesten aktivieren - Pinch-Gesten durchlassen
-    touchAction: 'manipulation', // Erlaubt alle Touch-Gesten inkl. Pinch
+    // Touch-Events werden über CSS gesteuert
     userSelect: 'none', // Verhindert Text-Auswahl
   };
 
@@ -206,22 +205,8 @@ export default function GridContainerNode({ data, selected, id }) {
         }}
       />
 
-      {/* Haupt-Container - Touch-Events durchlassen für Pinch-Gesten */}
-      <div 
-        style={nodeStyle}
-        onTouchStart={(e) => {
-          // Touch-Events an React Flow weiterleiten
-          e.stopPropagation();
-        }}
-        onTouchMove={(e) => {
-          // Touch-Events an React Flow weiterleiten
-          e.stopPropagation();
-        }}
-        onTouchEnd={(e) => {
-          // Touch-Events an React Flow weiterleiten
-          e.stopPropagation();
-        }}
-      >
+      {/* Haupt-Container - Touch-Events werden über CSS gesteuert */}
+      <div style={nodeStyle}>
         {/* Grid-Linien */}
         <svg
           width={containerWidth}
@@ -263,7 +248,6 @@ export default function GridContainerNode({ data, selected, id }) {
               fontSize: '1000px',
               color: 'rgba(0,0,0,0.1)',
               pointerEvents: 'none', // Verhindert Interaktion mit Zellen
-              touchAction: 'manipulation', // Pinch-Gesten durchlassen
             }}
           >
             {/* Zellen-Nummer anzeigen */}
@@ -279,7 +263,6 @@ export default function GridContainerNode({ data, selected, id }) {
                   width: cell.width * 0.8,  // 80% der Zellen-Breite
                   height: cell.height * 0.8, // 80% der Zellen-Höhe
                   pointerEvents: 'auto', // Lerneinheiten sind interaktiv
-                  touchAction: 'manipulation', // Pinch-Gesten durchlassen
                 }}
               >
                 <LerneinheitNode

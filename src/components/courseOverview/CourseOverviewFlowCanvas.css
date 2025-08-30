@@ -68,4 +68,44 @@
   font-family: 'Blogger Sans', sans-serif !important;
 }
 
+/* Touch-Events für CourseOverviewFlowCanvas optimieren */
+.react-flow__pane {
+  touch-action: manipulation !important;
+}
+
+.react-flow__viewport {
+  touch-action: manipulation !important;
+}
+
+.react-flow__node {
+  touch-action: manipulation !important;
+}
+
+/* Spezielle Touch-Eigenschaften für Grid-Container-Nodes */
+.react-flow__node[data-type="gridContainer"] {
+  touch-action: manipulation !important;
+  pointer-events: none !important;
+}
+
+.react-flow__node[data-type="gridContainer"] * {
+  touch-action: manipulation !important;
+  pointer-events: none !important;
+}
+
+/* Lerneinheiten interaktiv halten */
+.react-flow__node[data-type="lerneinheit"] {
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+}
+
+/* Touch-Gesten für alle React Flow Elemente aktivieren */
+.react-flow__pane {
+  touch-action: pinch-zoom pan-x pan-y !important;
+}
+
+/* Zoom-Gesten explizit aktivieren */
+.react-flow__viewport {
+  touch-action: pinch-zoom !important;
+}
+
 

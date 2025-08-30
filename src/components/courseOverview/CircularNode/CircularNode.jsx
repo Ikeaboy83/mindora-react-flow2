@@ -149,7 +149,10 @@ export const circularNodes = [
     data: {
       size: 'large',
       type: 'central',
-      label: 'CENTRAL L1'
+      label: 'CENTRAL L1',
+      customStyle: {
+        background: '#0066cc'
+      }
     },
   },
   
