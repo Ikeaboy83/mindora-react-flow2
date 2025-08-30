@@ -151,7 +151,7 @@ export const circularNodes = [
       type: 'central',
       label: 'CENTRAL L1',
       customStyle: {
-        background: '#0066cc'
+        background: '#ff6600'
       }
     },
   },

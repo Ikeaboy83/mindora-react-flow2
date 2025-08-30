@@ -108,4 +108,57 @@
   touch-action: pinch-zoom !important;
 }
 
+/* Radikale Lösung: Alle Touch-Events durchlassen */
+.react-flow__node[data-type="gridContainer"] {
+  pointer-events: none !important;
+  touch-action: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+.react-flow__node[data-type="gridContainer"] * {
+  pointer-events: none !important;
+  touch-action: none !important;
+}
+
+/* Touch-Events nur für Lerneinheiten aktivieren */
+.react-flow__node[data-type="lerneinheit"] {
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+}
+
+/* Universelle Lösung: Alle Nodes transparent für Touch-Events machen */
+.react-flow__node {
+  pointer-events: none !important;
+  touch-action: none !important;
+}
+
+.react-flow__node * {
+  pointer-events: none !important;
+  touch-action: none !important;
+}
+
+/* Nur spezifische Node-Typen interaktiv machen */
+.react-flow__node[data-type="lerneinheit"],
+.react-flow__node[data-type="circular"],
+.react-flow__node[data-type="firstWrapper"],
+.react-flow__node[data-type="secondWrapper"] {
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+}
+
+/* Touch-Events für den gesamten React Flow Container aktivieren */
+.react-flow {
+  touch-action: manipulation !important;
+}
+
+.react-flow__pane {
+  touch-action: manipulation !important;
+  pointer-events: auto !important;
+}
+
 
