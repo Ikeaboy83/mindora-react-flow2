@@ -1,4 +1,21 @@
-/* Einfache Touch-Events-Aktivierung für React Flow */
+/* Touch-Events für alle React Flow Elemente aktivieren */
 .react-flow__pane {
   touch-action: manipulation !important;
+}
+
+.react-flow__viewport {
+  touch-action: manipulation !important;
+}
+
+.react-flow__node {
+  touch-action: manipulation !important;
+}
+
+.react-flow__node * {
+  touch-action: manipulation !important;
+}
+
+/* Zoom-Gesten explizit aktivieren */
+.react-flow__pane {
+  touch-action: pinch-zoom !important;
 }

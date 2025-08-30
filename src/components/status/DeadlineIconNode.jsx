@@ -13,8 +13,6 @@ export default function DeadlineIconNode() {
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 1,
-        touchAction: 'none', // Touch-Events deaktivieren
-        userSelect: 'none', // Text-Auswahl verhindern
       }}
     >
       <img src={calendarIcon} alt="Kalender" width={15} height={15} />

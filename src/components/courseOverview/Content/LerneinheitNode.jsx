@@ -9,7 +9,7 @@ import calendarIcon from '../../../assets/calendar.svg';
 import pic1 from '../../../assets/Pictures/pic1.jpg';
 import pic2 from '../../../assets/Pictures/pic2.jpg';
 import pic3 from '../../../assets/Pictures/pic3.jpg';
-import { getLerneinheitScaleFactor, calculateLerneinheitPositionInCell, getContainerDimensions } from '../GridboxNode/gridUtils';
+import { calculateLerneinheitPositionInCell, getContainerDimensions } from '../GridboxNode/gridUtils';
 import { calculateSingleIconPosition } from '../GridboxNode/gridUtilsIcons';
 
 // Custom Deadline Icon mit Shimmer-Effekt
@@ -135,8 +135,6 @@ export default function LerneinheitNode({ data }) {
         fontWeight: 'bold',
         overflow: 'hidden',
         position: 'relative', // für absolute Icons
-        touchAction: 'none', // Touch-Events deaktivieren
-        userSelect: 'none', // Text-Auswahl verhindern
       }}
     >
                  {/* Status-Icons mit dynamischer Skalierung */}
@@ -162,9 +160,7 @@ export default function LerneinheitNode({ data }) {
                  zIndex: 2,
                  transform: `scale(${dynamicIconScale})`, // Dynamische Skalierung
                  transformOrigin: 'top left',
-                 pointerEvents: 'none', // Pointer-Events deaktivieren
-                 touchAction: 'none', // Touch-Events deaktivieren
-                 userSelect: 'none', // Text-Auswahl verhindern
+                 pointerEvents: 'auto', // Icons klickbar machen
                }}
              >
                <IconComp />
@@ -236,12 +232,12 @@ export const nineGridLerneinheiten = [
     data: {
       title: '9er Grid Lerneinheit 1',
       // SKALIERTE Größen basierend auf Container-ID
-      width: 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
-      height: 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+      width: 18000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
+      height: 12000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
       backgroundColor: '#e6fefc',
       borderColor: '#30b89b',
       // SKALIERTE Schriftgröße basierend auf Container-ID
-      fontSize: 960 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+      fontSize: 960 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
       imageSource: 'pic1', // Bild-Quelle für diese Lerneinheit
                            statusIcons: [
           {
@@ -270,20 +266,20 @@ export const nineGridLerneinheiten = [
     data: {
              title: '9er Grid Lerneinheit 2',
        // SKALIERTE Größen basierend auf Container-ID
-       width: 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
-       height: 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       width: 18000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       height: 12000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        backgroundColor: '#e6fefc',
        borderColor: '#30b89b',
        // SKALIERTE Schriftgröße basierend auf Container-ID
-       fontSize: 960 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       fontSize: 960 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        imageSource: 'pic2', // Bild-Quelle für diese Lerneinheit
               statusIcons: [
          {
            type: 'doneIcon',
            ...(() => {
              // Berechne die tatsächliche gerenderte Icon-Größe
-             const lerneinheitWidth = 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1');
-             const lerneinheitHeight = 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1');
+             const lerneinheitWidth = 18000 * 1; // getLerneinheitScaleFactor('9erContainer-1-level-1');
+             const lerneinheitHeight = 12000 * 1; // getLerneinheitScaleFactor('9erContainer-1-level-1');
              const scaleRatio = Math.min(lerneinheitWidth / 18000, lerneinheitHeight / 12000);
              const actualIconSize = 20 * 300 * scaleRatio; // 20px × 300 × scaleRatio
              
@@ -318,20 +314,20 @@ export const nineGridLerneinheiten = [
     data: {
              title: '9er Grid Lerneinheit 3',
        // SKALIERTE Größen basierend auf Container-ID
-       width: 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
-       height: 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       width: 18000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       height: 12000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        backgroundColor: '#e6fefc',
        borderColor: '#30b89b',
        // SKALIERTE Schriftgröße basierend auf Container-ID
-       fontSize: 960 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       fontSize: 960 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        imageSource: 'pic3', // Bild-Quelle für diese Lerneinheit - pic3
               statusIcons: [
          {
            type: 'favoritIcon',
            ...(() => {
              // Berechne die tatsächliche gerenderte Icon-Größe
-             const lerneinheitWidth = 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1');
-             const lerneinheitHeight = 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1');
+             const lerneinheitWidth = 18000 * 1; // getLerneinheitScaleFactor('9erContainer-1-level-1');
+             const lerneinheitHeight = 12000 * 1; // getLerneinheitScaleFactor('9erContainer-1-level-1');
              const scaleRatio = Math.min(lerneinheitWidth / 18000, lerneinheitHeight / 12000);
              const actualIconSize = 20 * 300 * scaleRatio; // 20px × 300 × scaleRatio
              
@@ -366,12 +362,12 @@ export const nineGridLerneinheiten = [
     data: {
              title: '9er Grid Lerneinheit 4',
        // SKALIERTE Größen basierend auf Container-ID
-       width: 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
-       height: 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       width: 18000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       height: 12000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        backgroundColor: '#e6fefc',
        borderColor: '#30b89b',
        // SKALIERTE Schriftgröße basierend auf Container-ID
-       fontSize: 960 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       fontSize: 960 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        imageSource: 'pic1', // Bild-Quelle für diese Lerneinheit
                statusIcons: [
           {
@@ -400,12 +396,12 @@ export const nineGridLerneinheiten = [
     data: {
              title: '9er Grid Lerneinheit 5',
        // SKALIERTE Größen basierend auf Container-ID
-       width: 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
-       height: 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       width: 18000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       height: 12000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        backgroundColor: '#e6fefc',
        borderColor: '#30b89b',
        // SKALIERTE Schriftgröße basierend auf Container-ID
-       fontSize: 960 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       fontSize: 960 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        imageSource: 'pic2', // Bild-Quelle für diese Lerneinheit
        statusIcons: [
          {
@@ -434,20 +430,20 @@ export const nineGridLerneinheiten = [
     data: {
                            title: '9er Grid Lerneinheit 6',
          // SKALIERTE Größen basierend auf Container-ID
-         width: 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
-         height: 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+         width: 18000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
+         height: 12000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
          backgroundColor: '#e6fefc',
          borderColor: '#30b89b',
          // SKALIERTE Schriftgröße basierend auf Container-ID
-         fontSize: 960 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+         fontSize: 960 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
          imageSource: 'pic3', // Bild-Quelle für diese Lerneinheit
          statusIcons: [
            {
              type: 'doneIcon',
              ...(() => {
                // Berechne die tatsächliche gerenderte Icon-Größe
-               const lerneinheitWidth = 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1');
-               const lerneinheitHeight = 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1');
+               const lerneinheitWidth = 18000 * 1; // getLerneinheitScaleFactor('9erContainer-1-level-1');
+               const lerneinheitHeight = 12000 * 1; // getLerneinheitScaleFactor('9erContainer-1-level-1');
                const scaleRatio = Math.min(lerneinheitWidth / 18000, lerneinheitHeight / 12000);
                const actualIconSize = 20 * 300 * scaleRatio; // 20px × 300 × scaleRatio
                
@@ -482,12 +478,12 @@ export const nineGridLerneinheiten = [
     data: {
              title: '9er Grid Lerneinheit 7',
        // SKALIERTE Größen basierend auf Container-ID
-       width: 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
-       height: 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       width: 18000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       height: 12000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        backgroundColor: '#e6fefc',
        borderColor: '#30b89b',
        // SKALIERTE Schriftgröße basierend auf Container-ID
-       fontSize: 960 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+       fontSize: 960 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
        imageSource: 'pic1', // Bild-Quelle für diese Lerneinheit
        statusIcons: [
          {
@@ -516,12 +512,12 @@ export const nineGridLerneinheiten = [
     data: {
       title: '9er Grid Lerneinheit 8',
       // SKALIERTE Größen basierend auf Container-ID
-      width: 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
-      height: 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+      width: 18000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
+      height: 12000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
       backgroundColor: '#e6fefc',
       borderColor: '#30b89b',
       // SKALIERTE Schriftgröße basierend auf Container-ID
-      fontSize: 960 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+      fontSize: 960 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
       imageSource: 'pic2', // Bild-Quelle für diese Lerneinheit
       statusIcons: [
         {
@@ -550,12 +546,12 @@ export const nineGridLerneinheiten = [
     data: {
       title: '9er Grid Lerneinheit 9',
       // SKALIERTE Größen basierend auf Container-ID
-      width: 18000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
-      height: 12000 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+      width: 18000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
+      height: 12000 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
       backgroundColor: '#e6fefc',
       borderColor: '#30b89b',
       // SKALIERTE Schriftgröße basierend auf Container-ID
-      fontSize: 960 * getLerneinheitScaleFactor('9erContainer-1-level-1'),
+      fontSize: 960 * 1, // getLerneinheitScaleFactor('9erContainer-1-level-1'),
       imageSource: 'pic3', // Bild-Quelle für diese Lerneinheit
       statusIcons: [
         {

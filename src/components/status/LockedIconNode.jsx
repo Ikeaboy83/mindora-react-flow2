@@ -13,8 +13,6 @@ export default function LockedIconNode() {
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 1,
-        touchAction: 'none', // Touch-Events deaktivieren
-        userSelect: 'none', // Text-Auswahl verhindern
       }}
     >
       <img src={lockIcon} alt="Locked" width={15} height={15} />

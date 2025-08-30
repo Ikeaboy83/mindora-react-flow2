@@ -116,37 +116,27 @@ export default function GridContainerNode({ data, selected, id }) {
       });
     }
     
-         // 9 Zellen erstellen
-     for (let row = 0; row < 3; row++) {
-       for (let col = 0; col < 3; col++) {
-         const cellNumber = row * 3 + col + 1; // Zellen 1-9
-         gridCells.push({
-           id: `cell-${row}-${col}`,
-           row,
-           col,
-           cellNumber,
-           x: col * cellWidth,
-           y: row * cellHeight,
-           width: cellWidth,
-           height: cellHeight,
-           centerX: col * cellWidth + cellWidth / 2,
-           centerY: row * cellHeight + cellHeight / 2,
-           // Lerneinheit-Informationen für alle 9 Zellen
-           hasLerneinheit: true,
-           lerneinheitData: {
-             id: `nine-grid-lerneinheit-${cellNumber}`,
-             title: `9er Grid Lerneinheit ${cellNumber}`,
-             imageSource: cellNumber % 3 === 1 ? 'pic1' : cellNumber % 3 === 2 ? 'pic2' : 'pic3',
-             statusIcons: cellNumber === 2 ? [{ type: 'doneIcon', x: 0.5, y: 0.3 }] : 
-                        cellNumber === 3 ? [{ type: 'favoritIcon', x: 0.5, y: 0.3 }] :
-                        cellNumber === 6 ? [{ type: 'doneIcon', x: 0.5, y: 0.3 }] : []
-           }
-         });
-       }
-     }
+    // 9 Zellen erstellen
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        const cellNumber = row * 3 + col + 1; // Zellen 1-9
+        gridCells.push({
+          id: `cell-${row}-${col}`,
+          row,
+          col,
+          cellNumber,
+          x: col * cellWidth,
+          y: row * cellHeight,
+          width: cellWidth,
+          height: cellHeight,
+          centerX: col * cellWidth + cellWidth / 2,
+          centerY: row * cellHeight + cellHeight / 2,
+          hasLerneinheit: false,
+          lerneinheitData: null
+        });
+      }
+    }
   }
-  
-
   
   const nodeStyle = {
     width: `${containerWidth}px`,
@@ -159,8 +149,9 @@ export default function GridContainerNode({ data, selected, id }) {
       : '0 400px 1600px rgba(0, 0, 0, 0.2)',
     transition: 'all 0.3s ease',
     position: 'relative',
-            touchAction: 'none', // Touch-Events deaktivieren
-        userSelect: 'none', // Text-Auswahl verhindern
+    // React Flow Touch-Gesten aktivieren - Pinch-Gesten durchlassen
+    touchAction: 'manipulation', // Erlaubt alle Touch-Gesten inkl. Pinch
+    userSelect: 'none', // Verhindert Text-Auswahl
   };
 
   return (
@@ -215,8 +206,22 @@ export default function GridContainerNode({ data, selected, id }) {
         }}
       />
 
-      {/* Haupt-Container */}
-      <div style={nodeStyle}>
+      {/* Haupt-Container - Touch-Events durchlassen für Pinch-Gesten */}
+      <div 
+        style={nodeStyle}
+        onTouchStart={(e) => {
+          // Touch-Events an React Flow weiterleiten
+          e.stopPropagation();
+        }}
+        onTouchMove={(e) => {
+          // Touch-Events an React Flow weiterleiten
+          e.stopPropagation();
+        }}
+        onTouchEnd={(e) => {
+          // Touch-Events an React Flow weiterleiten
+          e.stopPropagation();
+        }}
+      >
         {/* Grid-Linien */}
         <svg
           width={containerWidth}
@@ -241,54 +246,56 @@ export default function GridContainerNode({ data, selected, id }) {
           ))}
         </svg>
         
-                          {/* Grid-Zellen mit Lerneinheiten */}
-          {gridCells.map((cell) => (
-            <div
-              key={cell.id}
-              style={{
-                position: 'absolute',
-                left: cell.x,
-                top: cell.y,
-                width: cell.width,
-                height: cell.height,
-                border: '1px dashed rgba(0,0,0,0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1000px',
-                color: 'rgba(0,0,0,0.1)',
-                pointerEvents: 'none',
-              }}
-            >
-              {/* Zellen-Nummer anzeigen */}
-              {cell.cellNumber}
-              
-              {/* Lerneinheit in der Zelle rendern, falls vorhanden */}
-              {cell.hasLerneinheit && cell.lerneinheitData && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: cell.width * 0.05, // 5% der Zellen-Breite
-                    top: cell.height * 0.10,  // 10% der Zellen-Höhe
-                    width: cell.width * 0.8,  // 80% der Zellen-Breite
-                    height: cell.height * 0.8, // 80% der Zellen-Höhe
-                    pointerEvents: 'auto',
+        {/* Grid-Zellen mit Lerneinheiten */}
+        {gridCells.map((cell) => (
+          <div
+            key={cell.id}
+            style={{
+              position: 'absolute',
+              left: cell.x,
+              top: cell.y,
+              width: cell.width,
+              height: cell.height,
+              border: '1px dashed rgba(0,0,0,0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '1000px',
+              color: 'rgba(0,0,0,0.1)',
+              pointerEvents: 'none', // Verhindert Interaktion mit Zellen
+              touchAction: 'manipulation', // Pinch-Gesten durchlassen
+            }}
+          >
+            {/* Zellen-Nummer anzeigen */}
+            {cell.cellNumber}
+            
+            {/* Lerneinheit in der Zelle rendern, falls vorhanden */}
+            {cell.hasLerneinheit && cell.lerneinheitData && (
+              <div
+                style={{
+                  position: 'absolute',
+                  left: cell.width * 0.05, // 5% der Zellen-Breite
+                  top: cell.height * 0.10,  // 10% der Zellen-Höhe
+                  width: cell.width * 0.8,  // 80% der Zellen-Breite
+                  height: cell.height * 0.8, // 80% der Zellen-Höhe
+                  pointerEvents: 'auto', // Lerneinheiten sind interaktiv
+                  touchAction: 'manipulation', // Pinch-Gesten durchlassen
+                }}
+              >
+                <LerneinheitNode
+                  data={{
+                    ...cell.lerneinheitData,
+                    // Größen proportional zur Zelle skalieren
+                    width: cell.width * 0.8,
+                    height: cell.height * 0.8,
+                    // Schriftgröße proportional skalieren
+                    fontSize: Math.min(cell.width, cell.height) * 0.1,
                   }}
-                >
-                  <LerneinheitNode
-                    data={{
-                      ...cell.lerneinheitData,
-                      // Größen proportional zur Zelle skalieren
-                      width: cell.width * 0.8,
-                      height: cell.height * 0.8,
-                      // Schriftgröße proportional skalieren
-                      fontSize: Math.min(cell.width, cell.height) * 0.1,
-                    }}
-                  />
-                </div>
-              )}
-            </div>
-          ))}
+                />
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </>
   );

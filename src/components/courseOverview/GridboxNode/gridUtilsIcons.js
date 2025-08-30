@@ -590,12 +590,12 @@ export const createSixGridLerneinheitenWithIcons = (lerneinheiten, iconType = 'd
  * @returns {Array} Array mit 5 Learning Units OHNE Icons
  */
 export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'doneIcon', imageSources = {}) => {
-  // Container-Dimensionen: 5760 x 2880 (um das 10fache verkleinert)
-  const containerWidth = 5760;
-  const containerHeight = 2880;
+  // Container-Dimensionen: 57600 x 28800 (20% kleiner als vorher)
+  const containerWidth = 57600;
+  const containerHeight = 28800;
   
-  // Skalierungsfaktor für Lerneinheiten berechnen (um das 10fache verkleinert)
-  const scaleFactor = 0.1; // 5760/57600 = 0.1 (um das 10fache verkleinert)
+  // Skalierungsfaktor für Lerneinheiten berechnen (20% kleiner)
+  const scaleFactor = 0.96; // 20% kleiner als vorher (72000 * 0.8 = 57600)
   
   // Zellen-Dimensionen berechnen (3 Spalten, 2 Zeilen)
   const cellWidth = containerWidth / 3;
@@ -614,11 +614,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 1',
-        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
-        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
+        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
+        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
         imageSource: imageSources.pic1 || 'pic1',
       },
     },
@@ -633,11 +633,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 2',
-        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
-        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
+        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
+        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
         imageSource: imageSources.pic2 || 'pic2',
       },
     },
@@ -652,11 +652,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 3',
-        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
-        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
+        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
+        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
         imageSource: imageSources.pic3 || 'pic3',
       },
     },
@@ -671,11 +671,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 4',
-        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
-        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
+        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
+        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
         imageSource: imageSources.pic4 || 'pic4',
       },
     },
@@ -690,11 +690,11 @@ export const createSixGridLerneinheitenWithCorrectDimensions = (iconType = 'done
       parentId: '6erContainer-1-level-1',
       data: {
         title: '6er Grid Lerneinheit 5',
-        width: 18000 * scaleFactor, // Ursprüngliche Größe beibehalten
-        height: 12000 * scaleFactor, // Ursprüngliche Größe beibehalten
+        width: 18000 * scaleFactor, // 18000 * 1.2 = 21600
+        height: 12000 * scaleFactor, // 12000 * 1.2 = 14400
         backgroundColor: '#e6fefc',
         borderColor: '#30b89b',
-        fontSize: 960 * scaleFactor, // Ursprüngliche Größe beibehalten
+        fontSize: 960 * scaleFactor, // 960 * 1.2 = 1152
         imageSource: imageSources.pic5 || 'pic5',
       },
     }
@@ -794,53 +794,26 @@ export const calculateSixGridDoubleIconPositions = (lerneinheitPosition, lernein
  */
 export const createSixGridLerneinheitenWithDoubleIcons = (lerneinheiten, leftIconType = 'favoritIcon', rightIconType = 'doneIcon') => {
   return lerneinheiten.map(lerneinheit => {
-    // EXAKT die gleiche Logik wie im 9er-Grid verwenden:
-    // 1. Berechne die tatsächliche gerenderte Icon-Größe basierend auf der Lerneinheit-Skalierung
-    const lerneinheitWidth = lerneinheit.data.width;
-    const lerneinheitHeight = lerneinheit.data.height;
+    // Icon-Größe für Zentrierung berechnen (Standard: 20px)
+    const iconWidth = 6000;
+    const iconHeight = 6000;
     
-    // Ursprüngliche Standard-Größe: 18000x12000
-    const originalWidth = 18000;
-    const originalHeight = 12000;
-    
-    // Berechne den Skalierungsfaktor (gleiche Logik wie im 9er-Grid)
-    const scaleRatio = Math.min(lerneinheitWidth / originalWidth, lerneinheitHeight / originalHeight);
-    
-    // Berechne die tatsächliche Icon-Größe nach Skalierung (20px × 300 × scaleRatio)
-    const actualIconSize = 20 * 300 * scaleRatio; // 6000px × scaleRatio
-    
-    // 2. Verwende calculateSingleIconPosition für korrekte Icon-Zentrierung (gleiche Logik wie im 9er-Grid)
-    const leftIconPosition = calculateSingleIconPosition(
-      { x: 0.25, y: 0.3 }, // Relative Position: 25% Breite, 30% Höhe der Lerneinheit
-      lerneinheitWidth,      // Lerneinheit-Breite
-      lerneinheitHeight,     // Lerneinheit-Höhe
-      actualIconSize,        // Icon-Breite (echte gerenderte Größe)
-      actualIconSize         // Icon-Höhe (echte gerenderte Größe)
-    );
-    
-    const rightIconPosition = calculateSingleIconPosition(
-      { x: 0.75, y: 0.3 }, // Relative Position: 75% Breite, 30% Höhe der Lerneinheit
-      lerneinheitWidth,      // Lerneinheit-Breite
-      lerneinheitHeight,     // Lerneinheit-Höhe
-      actualIconSize,        // Icon-Breite (echte gerenderte Größe)
-      actualIconSize         // Icon-Höhe (echte gerenderte Größe)
-    );
-    
-    // 3. Icon-Objekte mit korrekter Positionierung erstellen (gleiche Struktur wie im 9er-Grid)
+    // Icon-Objekte mit relativen Positionen UND Icon-Zentrierung erstellen
+    // EXAKT die gleiche Logik wie im 9er-Grid: relative Position minus 50% der Icon-Größe
     const statusIcons = [
       {
         type: leftIconType,
-        x: leftIconPosition.centerIcon.x,
-        y: leftIconPosition.centerIcon.y,
-        offsetX: leftIconPosition.calculations.offsetX,
-        offsetY: leftIconPosition.calculations.offsetY
+        x: 0.25 - (iconWidth * 0.5) / lerneinheit.data.width, // 25% minus 50% der Icon-Breite (zentriert)
+        y: 0.3 - (iconHeight * 0.5) / lerneinheit.data.height,  // 30% minus 50% der Icon-Höhe (zentriert)
+        offsetX: 0, // Kein zusätzlicher Offset
+        offsetY: 0
       },
       {
         type: rightIconType,
-        x: rightIconPosition.centerIcon.x,
-        y: rightIconPosition.centerIcon.y,
-        offsetX: rightIconPosition.calculations.offsetX,
-        offsetY: rightIconPosition.calculations.offsetY
+        x: 0.75 - (iconWidth * 0.5) / lerneinheit.data.width, // 75% minus 50% der Icon-Breite (zentriert)
+        y: 0.3 - (iconHeight * 0.5) / lerneinheit.data.height,  // 30% minus 50% der Icon-Höhe (zentriert)
+        offsetX: 0, // Kein zusätzlicher Offset
+        offsetY: 0
       }
     ];
     

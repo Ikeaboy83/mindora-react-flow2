@@ -14,8 +14,6 @@ export function FirstWrapperNode({ data }) {
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        touchAction: 'none', // Touch-Events deaktivieren
-        userSelect: 'none', // Text-Auswahl verhindern
       }}
     >
       {/* Oberer Bereich: Container für den Inhalt */}
@@ -128,8 +126,6 @@ export function SecondWrapperNode({ data }) {
         display: 'flex',
         flexDirection: 'column',
         zIndex: 1, // Niedriger als Edges
-        touchAction: 'none', // Touch-Events deaktivieren
-        userSelect: 'none', // Text-Auswahl verhindern
       }}
     >
       {/* Oberer Bereich: Container für die Course Overview */}
