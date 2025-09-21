@@ -1,9 +1,13 @@
 import React from 'react';
 
-function NotificationBadge4({ data }) {
-  const width = 50;
-  const height = 50;
+function NotificationBadge({ data }) {
+  const size = data?.size || 40;
+  const width = size;
+  const height = size;
   const radius = width / 2;
+  
+  // Schriftgröße: entweder aus data Props oder proportional zur Badge-Größe berechnen
+  const fontSize = data?.fontSize || Math.max(10, Math.round(size * 0.25));
 
   return (
     <div style={{ position: 'relative' }}>
@@ -24,15 +28,15 @@ function NotificationBadge4({ data }) {
           y={radius + 4} 
           textAnchor="middle" 
           fill="white" 
-          fontSize="10" 
+          fontSize={fontSize} 
           fontWeight="bold"
           style={{ pointerEvents: 'none' }}
         >
-          {data?.label || '89/212'}
+          {data?.label || '0/0'}
         </text>
       </svg>
     </div>
   );
 }
 
-export default NotificationBadge4;
+export default NotificationBadge;

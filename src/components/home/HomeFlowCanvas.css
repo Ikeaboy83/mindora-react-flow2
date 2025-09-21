@@ -1,21 +1,44 @@
-/* Touch-Events für alle React Flow Elemente aktivieren */
+/* UNIVERSELLE REACTFLOW DRAG-FIX LÖSUNG */
+
+/* Pane: Alle Touch-Gesten erlauben */
 .react-flow__pane {
-  touch-action: manipulation !important;
+  touch-action: none !important;
+  pointer-events: auto !important;
+  user-select: none !important;
 }
 
+/* Viewport: Touch-Gesten weiterleiten */
 .react-flow__viewport {
-  touch-action: manipulation !important;
+  touch-action: none !important;
+  pointer-events: auto !important;
 }
 
+/* Nodes: Vollständig draggable machen */
 .react-flow__node {
-  touch-action: manipulation !important;
+  touch-action: none !important;
+  pointer-events: auto !important;
+  user-select: none !important;
+  cursor: grab !important;
 }
 
-.react-flow__node * {
-  touch-action: manipulation !important;
+.react-flow__node:hover {
+  cursor: grab !important;
 }
 
-/* Zoom-Gesten explizit aktivieren */
-.react-flow__pane {
-  touch-action: pinch-zoom !important;
+.react-flow__node.selected,
+.react-flow__node:active {
+  cursor: grabbing !important;
+}
+
+/* Handles: Funktional halten */
+.react-flow__handle {
+  touch-action: none !important;
+  pointer-events: auto !important;
+  cursor: crosshair !important;
+}
+
+/* Edges: Selektierbar aber nicht draggable */
+.react-flow__edge {
+  pointer-events: auto !important;
+  touch-action: none !important;
 }

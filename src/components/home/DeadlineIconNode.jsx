@@ -5,8 +5,8 @@ export default function DeadlineIconNode() {
   return (
     <div
       style={{
-        width: 40,
-        height: 40,
+        width: 50,
+        height: 50,
         borderRadius: 100,
         background: '#2B7FFF',
         display: 'flex',
@@ -17,7 +17,7 @@ export default function DeadlineIconNode() {
         overflow: 'hidden',
       }}
     >
-      <img src={calendarIcon} alt="Kalender" width={30} height={30} />
+      <img src={calendarIcon} alt="Kalender" width={37} height={37} />
       <div
         style={{
           position: 'absolute',

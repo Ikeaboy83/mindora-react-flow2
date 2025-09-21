@@ -1,14 +1,49 @@
 import { Handle, Position } from '@xyflow/react';
 
-export default function CategoryNode1({ data }) {
+// Konfiguration für die verschiedenen Kategorie-Typen
+const categoryConfig = {
+  1: {
+    color: '#E7CC03',
+    size: 214
+  },
+  2: {
+    color: '#01D2BC', 
+    size: 214
+  },
+  3: {
+    color: '#F66303',
+    size: 257
+  },
+  4: {
+    color: '#4A238D',
+    size: 278
+  },
+  5: {
+    color: '#5CCAEB',
+    size: 278
+  }
+};
+
+export default function TopCategoryNode({ data }) {
+  const categoryType = data?.categoryType || 1;
+  const config = categoryConfig[categoryType];
+  
+  if (!config) {
+    console.warn(`Unknown category type: ${categoryType}`);
+    // Fallback zur Kategorie 1
+    config = categoryConfig[1];
+  }
+
+  const { color, size } = config;
+
   return (
     <div
       style={{
-        width: 257,
-        height: 257,
+        width: size,
+        height: size,
         borderRadius: '50%',
-        background: '#F66303',
-        border: '4px #F66303',
+        background: color,
+        border: `4px ${color}`,
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 22,
@@ -21,6 +56,7 @@ export default function CategoryNode1({ data }) {
       }}
     >
       {data?.label ?? "Kein Label"}
+      
       {/* Links: Source und Target */}
       <Handle
         type="source"
@@ -29,7 +65,7 @@ export default function CategoryNode1({ data }) {
         style={{
           top: '45%',
           transform: 'translateY(-50%)',
-          background: '#F66303',
+          background: color,
           border: 'transparent',
         }}
       />
@@ -46,6 +82,7 @@ export default function CategoryNode1({ data }) {
           opacity: 0.3,
         }}
       />
+      
       {/* Rechts: Source und Target */}
       <Handle
         type="source"
@@ -54,7 +91,7 @@ export default function CategoryNode1({ data }) {
         style={{
           top: '45%',
           transform: 'translateY(-50%)',
-          background: '#F66303',
+          background: color,
           border: 'transparent',
         }}
       />

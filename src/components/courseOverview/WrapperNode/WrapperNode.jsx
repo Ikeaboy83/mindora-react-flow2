@@ -52,7 +52,7 @@ export function FirstWrapperNode({ data }) {
             fontFamily: 'Blogger Sans, sans-serif',
           }}
         >
-          {data?.title || 'COURSE OVERVIEW'}
+          {data?.title || 'CHANGE MANAGEMENT'}
         </div>
       </div>
       
@@ -163,7 +163,7 @@ export function SecondWrapperNode({ data }) {
             fontFamily: 'Blogger Sans, sans-serif',
           }}
         >
-          WEITERER VERSUCH
+          CHANGE-LEADERSHIP-ROLLEN
         </div>
       </div>
       
@@ -229,7 +229,9 @@ export const wrapperNodes = [
   {
     id: 'first-wrapper',
     type: 'firstWrapper',
-    position: { x: 258360, y: 56000 }, 
+    position: { x: 258360, y: 56000 },
+    draggable: true,
+    selectable: true,
     data: {
       label: 'First Wrapper',
     },
@@ -241,6 +243,8 @@ export const wrapperNodes = [
     type: 'secondWrapper',
     position: { x: 35088, y: 6000 },
     parentId: 'first-wrapper', // Als Kind des FirstWrapperNode
+    draggable: true,
+    selectable: true,
     data: {
       label: 'Second Wrapper',
     },

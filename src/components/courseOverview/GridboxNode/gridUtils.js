@@ -1,419 +1,248 @@
-// Grid-Utilities für 9er-Container
-export const createGridLines = (containerWidth, containerHeight, columns = 3, rows = 3) => {
-  const lines = [];
+// Grid-Utilities für Container-Dimensionen und Positionierung
+// Berechnet Container-Dimensionen und Lerneinheit-Positionen in Grid-Zellen
+
+// Basis-Größen für Level 1 (feste Größen)
+const GRID_BASE_SIZES = {
+  '3er': { width: 57600, height: 14400 },  // 3 Spalten, 1 Zeile (1/3 der Höhe eines 9er-Grids)
+  '6er': { width: 57600, height: 28800 },  // 3 Spalten, 2 Zeilen  
+  '9er': { width: 57600, height: 43200 }   // 3 Spalten, 3 Zeilen
+};
+
+// Level-Skalierungsfaktoren
+const LEVEL_SCALE_FACTORS = {
+  1: 1.0,        // Basis-Größe
+  2: 0.125,      // Angepasst für 9er-Grid: ~7200x5401px
+  3: 0.01215,    // 1.215% der Basis - Container: ~700x525px
+  4: 0.04375     // 4.375% der Basis (Level 4) - Lerneinheit height = 525px
+};
+
+// Hilfsfunktionen für ID-Parsing
+const extractGridTypeFromId = (id) => {
+  if (id.includes('3er')) return '3er';
+  if (id.includes('6er')) return '6er';
+  if (id.includes('9er')) return '9er';
+  return '9er'; // Default
+};
+
+const extractLevelFromId = (id) => {
+  const match = id.match(/level-(\d+)/);
+  return match ? parseInt(match[1]) : 1;
+};
+
+/**
+ * Container-Dimensionen basierend auf Container-ID (Legacy-Support)
+ * @param {string} containerId - ID des Containers
+ * @returns {Object} Container-Dimensionen { width, height }
+ */
+export const getContainerDimensions = (containerId) => {
+  // Legacy-Support für alte Container-IDs
+  const legacyDimensions = {
+    '9erContainer-level-1': { width: 57600, height: 43200 }, // Höhe eineinhalb mal so groß wie 6er-Grid
+    '6erContainer-level-1': { width: 57600, height: 28800 },
+    // Alte IDs für Rückwärtskompatibilität
+    '9erContainer-1-level-1': { width: 57600, height: 43200 }, // Höhe eineinhalb mal so groß wie 6er-Grid
+    '6erContainer-1-level-1': { width: 57600, height: 28800 }
+  };
   
-  // Vertikale Linien (Spalten)
-  for (let i = 1; i < columns; i++) {
-    const x = (containerWidth / columns) * i;
-    lines.push({
-      id: `v-line-${i}`,
-      type: 'vertical',
-      x1: x,
-      y1: 0,
-      x2: x,
-      y2: containerHeight,
-      stroke: 'black',
-      strokeWidth: 2,
-    });
+  if (legacyDimensions[containerId]) {
+    return legacyDimensions[containerId];
   }
   
-  // Horizontale Linien (Zeilen)
-  for (let i = 1; i < rows; i++) {
-    const y = (containerHeight / rows) * i;
-    lines.push({
-      id: `h-line-${i}`,
-      type: 'horizontal',
-      x1: 0,
-      y1: y,
-      x2: containerWidth,
-      y2: y,
-      stroke: 'black',
-      strokeWidth: 2,
-    });
-  }
-  
-  return lines;
+  // Neue Grid-basierte Berechnung
+  return getGridDimensions(containerId);
 };
 
-// Grid-Zellen-Koordinaten berechnen
-export const calculateGridCells = (containerWidth, containerHeight, columns = 3, rows = 3) => {
-  const cells = [];
-  const cellWidth = containerWidth / columns;
-  const cellHeight = containerHeight / rows;
+/**
+ * Grid-Dimensionen basierend auf Grid-Typ und Level
+ * @param {string} containerId - ID des Containers
+ * @param {string} gridType - Grid-Typ ('3er', '6er', '9er')
+ * @param {number} level - Level (1, 2, 3)
+ * @returns {Object} Container-Dimensionen { width, height }
+ */
+export const getGridDimensions = (containerId, gridType = null, level = null) => {
+  const finalGridType = gridType || extractGridTypeFromId(containerId);
+  const finalLevel = level || extractLevelFromId(containerId);
   
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < columns; col++) {
-      cells.push({
-        id: `cell-${row}-${col}`,
-        row,
-        col,
-        x: col * cellWidth,
-        y: row * cellHeight,
-        width: cellWidth,
-        height: cellHeight,
-        centerX: col * cellWidth + cellWidth / 2,
-        centerY: row * cellHeight + cellHeight / 2,
-      });
-    }
-  }
+  const baseSize = GRID_BASE_SIZES[finalGridType];
+  const scaleFactor = LEVEL_SCALE_FACTORS[finalLevel];
   
-  return cells;
+  return {
+    width: baseSize.width * scaleFactor,
+    height: baseSize.height * scaleFactor
+  };
 };
 
-// 9er-Grid spezifische Konfiguration
-export const nineGridConfig = {
-  columns: 3,
-  rows: 3,
-  totalCells: 9,
-  gridLineColor: 'black',
-  gridLineWidth: 2,
-  cellPadding: 20,
-  // Verfügbare Zellen-Größe nach Abzug des Paddings
-  getAvailableCellSize: (containerWidth, containerHeight) => ({
-    width: (containerWidth / 3) - 40, // 20px Padding auf beiden Seiten
-    height: (containerHeight / 3) - 40, // 20px Padding auf beiden Seiten
-  }),
+/**
+ * Level-Skalierungsfaktor abrufen
+ * @param {number} level - Level (1, 2, 3)
+ * @returns {number} Skalierungsfaktor
+ */
+export const getLevelScaleFactor = (level) => {
+  return LEVEL_SCALE_FACTORS[level] || 1.0;
 };
 
-// 6er-Grid Konfiguration wurde in gridUtils6er.js verschoben
+/**
+ * Border-Radius für Grid-Container basierend auf Grid-Typ und Level berechnen
+ * @param {string} gridType - Grid-Typ ('3er', '6er', '9er')
+ * @param {number} level - Level (1, 2, 3)
+ * @returns {number} Border-Radius in Pixeln
+ */
+export const getGridContainerBorderRadius = (gridType, level) => {
+  // Basis-Border-Radius für Level 1 (in Pixeln)
+  const BASE_BORDER_RADIUS = {
+    '3er': 600,  // Standard-Rundung für 3er-Grid
+    '6er': 600,  // Standard-Rundung für 6er-Grid
+    '9er': 600   // Standard-Rundung für 9er-Grid
+  };
 
-// Positionen für alle 9 Zellen des 9er-Grids berechnen (RELATIV zum Container)
-export const calculateNineGridCellPositions = (containerWidth, containerHeight, lerneinheitWidth, lerneinheitHeight) => {
-  const cellWidth = containerWidth / 3;
-  const cellHeight = containerHeight / 3;
-  
-  // Neue Berechnung: Lerneinheiten bei 5% der Zellen-Breite und 10% der Zellen-Höhe
-  const cellPositions = [
-    // Zeile 1
-    {
-      id: 'cell-1',
-      position: { 
-        x: 0, // 0% der Container-Breite (links)
-        y: 0  // 0% der Container-Höhe (oben)
-      },
-      relativePosition: {
-        x: 0, // 0% der Container-Breite
-        y: 0  // 0% der Container-Höhe
-      },
-      // Lerneinheit-Position: 5% der Zellen-Breite, 10% der Zellen-Höhe
-      lerneinheitPosition: {
-        x: 0.05, // 5% der Zellen-Breite
-        y: 0.10  // 10% der Zellen-Höhe
-      },
-      row: 0,
-      col: 0,
-      centerX: cellWidth / 2,
-      centerY: cellHeight / 2,
-    },
-    {
-      id: 'cell-2',
-      position: { 
-        x: cellWidth, // 33.33% der Container-Breite (mittig)
-        y: 0          // 0% der Container-Höhe (oben)
-      },
-      relativePosition: {
-        x: 1/3, // 33.33% der Container-Breite
-        y: 0    // 0% der Container-Höhe
-      },
-      row: 0,
-      col: 1,
-      centerX: cellWidth + cellWidth / 2,
-      centerY: cellHeight / 2,
-    },
-    {
-      id: 'cell-3',
-      position: { 
-        x: 2 * cellWidth, // 66.67% der Container-Breite (rechts)
-        y: 0               // 0% der Container-Höhe (oben)
-      },
-      relativePosition: {
-        x: 2/3, // 66.67% der Container-Breite
-        y: 0    // 0% der Container-Höhe
-      },
-      row: 0,
-      col: 2,
-      centerX: 2 * cellWidth + cellWidth / 2,
-      centerY: cellHeight / 2,
-    },
-    // Zeile 2
-    {
-      id: 'cell-4',
-      position: { 
-        x: 0,           // 0% der Container-Breite (links)
-        y: cellHeight   // 33.33% der Container-Höhe (mittig)
-      },
-      relativePosition: {
-        x: 0,    // 0% der Container-Breite
-        y: 1/3  // 33.33% der Container-Höhe
-      },
-      row: 1,
-      col: 0,
-      centerX: cellWidth / 2,
-      centerY: cellHeight + cellHeight / 2,
-    },
-    {
-      id: 'cell-5',
-      position: { 
-        x: cellWidth,   // 33.33% der Container-Breite (mittig)
-        y: cellHeight   // 33.33% der Container-Höhe (mittig)
-      },
-      relativePosition: {
-        x: 1/3, // 33.33% der Container-Breite
-        y: 1/3 // 33.33% der Container-Höhe
-      },
-      row: 1,
-      col: 1,
-      centerX: cellWidth + cellWidth / 2,
-      centerY: cellHeight + cellHeight / 2,
-    },
-    {
-      id: 'cell-6',
-      position: { 
-        x: 2 * cellWidth, // 66.67% der Container-Breite (rechts)
-        y: cellHeight      // 33.33% der Container-Höhe (mittig)
-      },
-      relativePosition: {
-        x: 2/3, // 66.67% der Container-Breite
-        y: 1/3 // 33.33% der Container-Höhe
-      },
-      row: 1,
-      col: 2,
-      centerX: 2 * cellWidth + cellWidth / 2,
-      centerY: cellHeight + cellHeight / 2,
-    },
-    // Zeile 3
-    {
-      id: 'cell-7',
-      position: { 
-        x: 0,             // 0% der Container-Breite (links)
-        y: 2 * cellHeight // 66.67% der Container-Höhe (unten)
-      },
-      relativePosition: {
-        x: 0,    // 0% der Container-Breite
-        y: 2/3  // 66.67% der Container-Höhe
-      },
-      row: 2,
-      col: 0,
-      centerX: cellWidth / 2,
-      centerY: 2 * cellHeight + cellHeight / 2,
-    },
-    {
-      id: 'cell-8',
-      position: { 
-        x: cellWidth,     // 33.33% der Container-Breite (mittig)
-        y: 2 * cellHeight // 66.67% der Container-Höhe (unten)
-      },
-      relativePosition: {
-        x: 1/3, // 33.33% der Container-Breite
-        y: 2/3 // 66.67% der Container-Höhe
-      },
-      row: 2,
-      col: 1,
-      centerX: cellWidth + cellWidth / 2,
-      centerY: 2 * cellHeight + cellHeight / 2,
-    },
-    {
-      id: 'cell-9',
-      position: { 
-        x: 2 * cellWidth,   // 66.67% der Container-Breite (rechts)
-        y: 2 * cellHeight   // 66.67% der Container-Höhe (unten)
-      },
-      relativePosition: {
-        x: 2/3, // 66.67% der Container-Breite
-        y: 2/3 // 66.67% der Container-Höhe
-      },
-      row: 2,
-      col: 2,
-      centerX: 2 * cellWidth + cellWidth / 2,
-      centerY: 2 * cellHeight + cellHeight / 2,
-    },
-  ];
-  
-  return cellPositions;
-};
-
-
-// Debug-Funktion: Zeigt alle berechneten Positionen an
-export const debugCellPositions = (containerWidth = 60000, containerHeight = 45000, lerneinheitWidth = 18000, lerneinheitHeight = 12000) => {
-  const positions = calculateNineGridCellPositions(containerWidth, containerHeight, lerneinheitWidth, lerneinheitHeight);
-  
-  console.log('=== DEBUG: 9er-Grid Zellen-Positionen ===');
-  console.log(`Container: ${containerWidth} × ${containerHeight}`);
-  console.log(`Lerneinheit: ${lerneinheitWidth} × ${lerneinheitHeight}`);
-  console.log(`Zellen-Größe: ${containerWidth / 3} × ${containerHeight / 3}`);
-  
-  positions.forEach(pos => {
-    console.log(`${pos.id}: x=${pos.position.x}, y=${pos.position.y}`);
-  });
-  
-  return positions;
-};
-
-// Hilfsfunktion: Position für eine spezifische Zelle abrufen
-export const getCellPosition = (cellNumber, containerWidth, containerHeight, lerneinheitWidth, lerneinheitHeight) => {
-  const positions = calculateNineGridCellPositions(containerWidth, containerHeight, lerneinheitWidth, lerneinheitHeight);
-  return positions.find(pos => pos.id === `cell-${cellNumber}`);
-};
-
-
-// Standard-Größen für 9er-Grid Lerneinheiten (20% größer als vorher)
-export const defaultLerneinheitSizes = {
-  width: 18000,  // 15000 * 1.2 = 18000
-  height: 12000, // 10000 * 1.2 = 12000
-  fontSize: 960, // 800 * 1.2 = 960
-};
-
-// Hilfsfunktion: Alle 9 Lerneinheiten mit Standard-Größen erstellen
-export const createAllNineGridLerneinheiten = (containerWidth = 60000, containerHeight = 45000, imageSources = {}) => {
-  const lerneinheiten = [];
-  
-  for (let i = 1; i <= 9; i++) {
-    const cellPosition = getCellPosition(i, containerWidth, containerHeight, defaultLerneinheitSizes.width, defaultLerneinheitSizes.height);
+  // Level-spezifische Modifikatoren für Border-Radius
+  // Struktur: Level -> Grid-Typ -> Modifier (oder direkt Modifier für einheitliche Level)
+  const LEVEL_BORDER_RADIUS_MODIFIERS = {
+    1: 1.0,    // Level 1: Vollständige Basis-Rundung (einheitlich für alle Grid-Typen)
     
-    if (cellPosition) {
-      lerneinheiten.push({
-        id: `nine-grid-lerneinheit-${i}`,
-        type: 'lerneinheit',
-        position: cellPosition.position,
-        parentId: '9erContainer-1-level-1',
-        data: {
-          title: `9er Grid Lerneinheit ${i}`,
-          width: defaultLerneinheitSizes.width,
-          height: defaultLerneinheitSizes.height,
-          backgroundColor: '#e6fefc',
-          borderColor: '#30b89b',
-          fontSize: defaultLerneinheitSizes.fontSize,
-          imageSource: imageSources[i] || 'pic1', // Standardmäßig pic1, oder spezifisches Bild
-        },
-      });
-    }
-  }
-  
-  return lerneinheiten;
-};
-
-// Neue Funktion: Lerneinheiten mit relativen Positionen erstellen (5% X, 10% Y)
-export const createLerneinheitenWithRelativePositions = (containerWidth = 60000, containerHeight = 45000, imageSources = {}) => {
-  const lerneinheiten = [];
-  
-  // Skalierungsfaktor basierend auf der Container-Größe (Standard: 60000x45000)
-  const scaleFactorX = containerWidth / 60000;
-  const scaleFactorY = containerHeight / 45000;
-  const scaleFactor = Math.min(scaleFactorX, scaleFactorY); // Verwende den kleineren Faktor für proportionale Skalierung
-  
-  for (let i = 1; i <= 9; i++) {
-    const cellPosition = getCellPosition(i, containerWidth, containerHeight, defaultLerneinheitSizes.width, defaultLerneinheitSizes.height);
+    2: {       // Level 2: Grid-spezifische reduzierte Rundungen
+      '3er': 0.3,   // 30% der Basis-Rundung für 3er-Grid Level 2
+      '6er': 0.3,   // 30% der Basis-Rundung für 6er-Grid Level 2
+      '9er': 0.15   // 15% der Basis-Rundung für 9er-Grid Level 2 (stärker abgeschwächt)
+    },
     
-    if (cellPosition) {
-      // Berechne die absolute Position basierend auf der Zelle und der 5%/10% Offset
-      const cellWidth = containerWidth / 3;
-      const cellHeight = containerHeight / 3;
-      
-      // Zelle-Position + 5% der Zellen-Breite für X, 10% der Zellen-Höhe für Y
-      const absoluteX = cellPosition.position.x + (cellWidth * 0.05);
-      const absoluteY = cellPosition.position.y + (cellHeight * 0.10);
-      
-      lerneinheiten.push({
-        id: `nine-grid-lerneinheit-${i}`,
-        type: 'lerneinheit',
-        // ABSOLUTE Position mit 5%/10% Offset
-        position: {
-          x: absoluteX,
-          y: absoluteY
-        },
-        // RELATIVE Position für die LerneinheitNode-Komponente (5% X, 10% Y)
-        relativePosition: {
-          x: 0.05, // 5% der Zellen-Breite
-          y: 0.10  // 10% der Zellen-Höhe
-        },
-        parentId: '9erContainer-1-level-1',
-        data: {
-          title: `9er Grid Lerneinheit ${i}`,
-          // SKALIERTE Größen proportional zur Container-Größe
-          width: defaultLerneinheitSizes.width * scaleFactor,
-          height: defaultLerneinheitSizes.height * scaleFactor,
-          backgroundColor: '#e6fefc',
-          borderColor: '#30b89b',
-          // SKALIERTE Schriftgröße proportional zur Container-Größe
-          fontSize: defaultLerneinheitSizes.fontSize * scaleFactor,
-          imageSource: imageSources[i] || 'pic1',
-          // RELATIVE Position für Icons und andere Elemente (5% X, 10% Y)
-          relativeX: 0.05,
-          relativeY: 0.10,
-        },
-      });
-    }
+    3: {       // Level 3: Extrem minimale Rundungen (einheitlich für alle Grid-Typen)
+      '3er': 0.02,  // 2% der Basis-Rundung für 3er-Grid Level 3
+      '6er': 0.02,  // 2% der Basis-Rundung für 6er-Grid Level 3  
+      '9er': 0.02   // 2% der Basis-Rundung für 9er-Grid Level 3
+      // Alle Grid-Typen haben die gleiche minimale Rundung für einheitliches Aussehen
+    },
+    
+    4: 0.1,    // Level 4: 10% der Basis-Rundung (einheitlich für alle Grid-Typen)
+    
+    // Zukünftige Level können hier einfach hinzugefügt werden:
+    // 5: { '3er': 0.05, '6er': 0.05, '9er': 0.05 }  // Beispiel für Level 5
+  };
+
+  const baseRadius = BASE_BORDER_RADIUS[gridType] || BASE_BORDER_RADIUS['9er'];
+  const levelModifier = LEVEL_BORDER_RADIUS_MODIFIERS[level];
+
+  // Robuste Modifier-Verarbeitung für alle Level-Typen
+  let finalModifier;
+  
+  if (typeof levelModifier === 'object') {
+    // Grid-spezifische Modifikatoren (Level 2, 3, etc.)
+    finalModifier = levelModifier[gridType] || levelModifier['9er'] || 1.0;
+  } else if (typeof levelModifier === 'number') {
+    // Einheitliche Modifikatoren (Level 1, 4, etc.)
+    finalModifier = levelModifier;
+  } else {
+    // Fallback für unbekannte Level
+    finalModifier = 1.0;
   }
   
-  return lerneinheiten;
+  return Math.round(baseRadius * finalModifier);
 };
 
-// 6er-Grid Lerneinheiten-Funktion wurde in gridUtils6er.js verschoben
-
-// Neue Funktion: Position für eine Lerneinheit in einer spezifischen Zelle berechnen
-export const calculateLerneinheitPositionInCell = (cellNumber, containerWidth, containerHeight) => {
-  const cellWidth = containerWidth / 3;
-  const cellHeight = containerHeight / 3;
+/**
+ * Berechnet die Position einer Lerneinheit innerhalb einer Grid-Zelle
+ * ROBUSTE VERSION: Funktioniert unabhängig von Container-Größe und Level
+ * @param {number} cellNumber - Zellennummer (1-3 für 3er-Grid, 1-6 für 6er-Grid, 1-9 für 9er-Grid)
+ * @param {number} containerWidth - Container-Breite
+ * @param {number} containerHeight - Container-Höhe
+ * @param {string} gridType - Grid-Typ ('3er', '6er', '9er') - ERFORDERLICH für robuste Berechnung
+ * @param {number} lerneinheitWidth - Breite der Lerneinheit (optional, Standard: 18000)
+ * @param {number} lerneinheitHeight - Höhe der Lerneinheit (optional, Standard: 12000)
+ * @returns {Object} Position { x, y }
+ */
+export const calculateLerneinheitPositionInCell = (cellNumber, containerWidth, containerHeight, gridType = null, lerneinheitWidth = 18000, lerneinheitHeight = 12000) => {
+  // Grid-Typ automatisch bestimmen basierend auf Verhältnis (robuster als absolute Dimensionen)
+  let detectedGridType = gridType;
+  if (!detectedGridType) {
+    const aspectRatio = containerWidth / containerHeight;
+    // Aspect Ratios: 3er = 4:1, 6er = 2:1, 9er = 4:3
+    if (aspectRatio > 3.5) detectedGridType = '3er';      // ~4:1 Verhältnis
+    else if (aspectRatio > 1.8) detectedGridType = '6er'; // ~2:1 Verhältnis  
+    else detectedGridType = '9er';                         // ~4:3 Verhältnis
+  }
   
-  // Zelle-Position berechnen
-  const row = Math.floor((cellNumber - 1) / 3);
-  const col = (cellNumber - 1) % 3;
+  // Grid-Konfiguration (unveränderlich)
+  const gridConfigs = {
+    '3er': { cols: 3, rows: 1 },
+    '6er': { cols: 3, rows: 2 },
+    '9er': { cols: 3, rows: 3 }
+  };
   
+  const config = gridConfigs[detectedGridType];
+  if (!config) {
+    console.error(`Unbekannter Grid-Typ: ${detectedGridType}`);
+    return { x: 0, y: 0 };
+  }
+  
+  // Zellen-Dimensionen berechnen
+  const cellWidth = containerWidth / config.cols;
+  const cellHeight = containerHeight / config.rows;
+  
+  // Zellen-Position berechnen (0-basiert)
+  const col = (cellNumber - 1) % config.cols;
+  const row = Math.floor((cellNumber - 1) / config.cols);
+  
+  // Zellen-Ursprungsposition
   const cellX = col * cellWidth;
   const cellY = row * cellHeight;
   
-  // Lerneinheit-Position: 5% der Zellen-Breite, 10% der Zellen-Höhe
-  const lerneinheitX = cellX + (cellWidth * 0.05);
-  const lerneinheitY = cellY + (cellHeight * 0.10);
+  // ZENTRALE POSITIONIERUNG: Lerneinheit in der Mitte der Zelle
+  const centeredX = cellX + (cellWidth - lerneinheitWidth) / 2;
+  const centeredY = cellY + (cellHeight - lerneinheitHeight) / 2;
+  
+  // Debug-Ausgabe für Entwicklung
+  console.log(`Grid-Positionierung: ${detectedGridType}-Grid, Zelle ${cellNumber}`, {
+    containerSize: `${containerWidth}x${containerHeight}`,
+    cellSize: `${cellWidth.toFixed(0)}x${cellHeight.toFixed(0)}`,
+    cellPosition: `${cellX.toFixed(0)},${cellY.toFixed(0)}`,
+    lerneinheitSize: `${lerneinheitWidth}x${lerneinheitHeight}`,
+    finalPosition: `${centeredX.toFixed(0)},${centeredY.toFixed(0)}`
+  });
   
   return {
-    x: lerneinheitX,
-    y: lerneinheitY,
-    cellX: cellX,
-    cellY: cellY,
-    cellWidth: cellWidth,
-    cellHeight: cellHeight
+    x: centeredX,
+    y: centeredY
   };
 };
 
-// 6er-Grid Position-Funktion wurde in gridUtils6er.js verschoben
-
-// Container-Größe für 9er-Container
-export const getNineContainerDimensions = () => {
-  return { width: 60000, height: 45000 }; // Standard-Größe für bessere Sichtbarkeit
-};
-
-// Skalierungsfaktor für 9er-Container Lerneinheiten
-export const getNineGridLerneinheitScaleFactor = () => {
-  const { width, height } = getNineContainerDimensions();
-  const scaleFactorX = width / 60000;
-  const scaleFactorY = height / 45000;
-  return Math.min(scaleFactorX, scaleFactorY);
-};
-
-// Standard-Node-Konfiguration für 9er-Container
-export const createNineContainerNodeConfig = () => {
-  return {
-    id: '9erContainer-1-level-1',
-    type: 'gridContainer',
-    position: { x: 0, y: 0 }, // Position bei (0,0)
-    data: {},
+/**
+ * Berechnet den Skalierungsfaktor für Lerneinheiten basierend auf Container-ID
+ * @param {string} containerId - ID des Containers
+ * @returns {number} Skalierungsfaktor
+ */
+export const getLerneinheitScaleFactor = (containerId) => {
+  const scaleFactors = {
+    '9erContainer-level-1': 1.0,    // 9er-Container: Standard-Größe
+    '6erContainer-level-1': 0.96,   // 6er-Container: 20% kleiner
+    // Alte IDs für Rückwärtskompatibilität
+    '9erContainer-1-level-1': 1.0,    // 9er-Container: Standard-Größe
+    '6erContainer-1-level-1': 0.96    // 6er-Container: 20% kleiner
   };
+  
+  return scaleFactors[containerId] || 1.0;
 };
 
-// Import der createLerneinheitWithSingleIcon Funktion
-import { createLerneinheitWithSingleIcon } from './gridUtilsIcons.js';
+/**
+ * Debug-Funktion: Zeigt alle Container-Dimensionen an
+ */
+export const debugContainerDimensions = () => {
+  console.log('=== DEBUG: Container-Dimensionen ===');
+  console.log('9er-Container:', getContainerDimensions('9erContainer-level-1'));
+  console.log('6er-Container:', getContainerDimensions('6erContainer-level-1'));
+};
 
-// Neue Funktion: Container-Dimensionen basierend auf Container-ID abrufen
-export const getContainerDimensions = (containerId) => {
-  if (containerId === '6erContainer-1-level-1') {
-    return { width: 64000, height: 40000 }; // 6er-Container
-  } else {
-    // Standard: 9er-Container
-    return { width: 80000, height: 60000 }; // 9er-Container
+/**
+ * Debug-Funktion: Zeigt alle Zellen-Positionen an
+ * @param {string} containerId - ID des Containers
+ */
+export const debugCellPositions = (containerId = '9erContainer-level-1') => {
+  console.log(`=== DEBUG: Zellen-Positionen für ${containerId} ===`);
+  const { width, height } = getContainerDimensions(containerId);
+  const is6erGrid = containerId === '6erContainer-level-1';
+  const maxCells = is6erGrid ? 6 : 9;
+  
+  for (let i = 1; i <= maxCells; i++) {
+    const position = calculateLerneinheitPositionInCell(i, width, height);
+    console.log(`Zelle ${i}: x=${position.x}, y=${position.y}`);
   }
 };
-
-
-
-

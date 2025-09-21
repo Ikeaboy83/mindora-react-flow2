@@ -40,10 +40,10 @@ export default function CircularNode({ data }) {
     },
     medium: { 
       width: 52672, 
-      height: 52112, 
+      height: 52672,
       fontSize: 6000, 
       border: '80px solid #01D2BC',
-      boxShadow: '0 520px 1560px rgba(0, 0, 0, 0.15)',
+      boxShadow: '-2000px 2000px 5000px rgba(0, 0, 0, 0.25), -3000px 3000px 5000px rgba(0, 0, 0, 0.08)',
       handleSize: 12
     },
     large: { 
@@ -51,7 +51,7 @@ export default function CircularNode({ data }) {
       height: 91332, 
       fontSize: 8750, 
       border: '2px solid #01D2BC',
-      boxShadow: '0 23120px 69360px rgba(0, 0, 0, 0.15)',
+      boxShadow: '-3000px 3000px 7500px rgba(0, 0, 0, 0.25), -4500px 4500px 7500px rgba(0, 0, 0, 0.08)',
       handleSize: 34
     }
   };
@@ -69,6 +69,7 @@ export default function CircularNode({ data }) {
         background: '#01D2BC',
         border: config.border,
         color: '#fff',
+        fontFamily: "'Blogger Sans', sans-serif",
         fontWeight: 'bold',
         fontSize: config.fontSize,
         textAlign: 'center',
@@ -140,6 +141,13 @@ export default function CircularNode({ data }) {
 }
 
 // Node-Definitionen für den Import
+// Helper function to make nodes draggable
+const makeNodeDraggable = (node) => ({
+  ...node,
+  draggable: true,
+  selectable: true
+});
+
 export const circularNodes = [
   // 1-Level Central Node (Large)
   {
@@ -149,10 +157,7 @@ export const circularNodes = [
     data: {
       size: 'large',
       type: 'central',
-      label: 'CENTRAL L1',
-      customStyle: {
-        background: '#ff6600'
-      }
+      label: 'LEADERSHIPROLLEN',
     },
   },
   
@@ -164,7 +169,7 @@ export const circularNodes = [
     data: {
       size: 'medium',
       type: 'category',
-      label: 'TOP LEFT L1'
+      label: 'FÜHRUNGS-\nKOMPETENZEN'
     },
   },
   {
@@ -174,7 +179,7 @@ export const circularNodes = [
     data: {
       size: 'medium',
       type: 'category',
-      label: 'MIDDLE LEFT L1'
+      label: 'DIVERSITY & INCLUSION'
     },
   },
   {
@@ -184,7 +189,7 @@ export const circularNodes = [
     data: {
       size: 'medium',
       type: 'category',
-      label: 'BOTTOM LEFT L1'
+      label: 'KONFLIKT-\nMANAGEMENT'
     },
   },
   {
@@ -194,7 +199,7 @@ export const circularNodes = [
     data: {
       size: 'medium',
       type: 'category',
-      label: 'MIDDLE RIGHT L1'
+      label: 'AGILES ARBEITEN'
     },
   },
   {
@@ -204,7 +209,7 @@ export const circularNodes = [
     data: {
       size: 'medium',
       type: 'category',
-      label: 'BOTTOM RIGHT L1'
+      label: 'TEAMDYNAMIK'
     },
   },
   
@@ -217,7 +222,7 @@ export const circularNodes = [
     data: {
       size: 'smallCentral',
       type: 'central',
-      label: '2LLARGE'
+      label: 'CHANGE MANAGEMENT'
     },
   },
   
@@ -230,7 +235,7 @@ export const circularNodes = [
     data: {
       size: 'small',
       type: 'category',
-      label: '2LLEFTTOP'
+      label: 'GRUNDLAGEN DES CHANGE MANAGEMENTS'
     },
   },
   {
@@ -241,7 +246,7 @@ export const circularNodes = [
     data: {
       size: 'small',
       type: 'category',
-      label: '2LLEFTBOTTOM'
+      label: 'KOMMUNIKATION IM VERÄNDERUNGSPROZESS'
     },
   },
   {
@@ -252,7 +257,7 @@ export const circularNodes = [
     data: {
       size: 'small',
       type: 'category',
-      label: '2LRIGHTBOTTOM'
+      label: 'WIDERSTÄNDE VERSTEHEN & ÜBERWINDEN'
     },
   },
   
@@ -265,7 +270,7 @@ export const circularNodes = [
     data: {
       size: 'tinyCentral',
       type: 'central',
-      label: 'LEADERSHIP & TEAMS'
+      label: 'CHANGE-LEADERSHIP-ROLLEN'
     },
   },
   
@@ -278,18 +283,18 @@ export const circularNodes = [
     data: {
       size: 'tiny',
       type: 'category',
-      label: '1.\nEINFÜHRUNG'
+      label: 'VISIONÄR'
     },
   },
   {
     id: 'three-level-category-middle-left',
     type: 'circular',
-    position: { x: 1950, y: 1640 },
+    position: { x: 1950, y: 1637 },
     parentId: 'second-wrapper',
     data: {
       size: 'tiny',
       type: 'category',
-      label: '2. METHODE & FRAMEWORKS'
+      label: 'KOMMUNIKATOR'
     },
   },
   {
@@ -300,7 +305,7 @@ export const circularNodes = [
     data: {
       size: 'tiny',
       type: 'category',
-      label: '3. PROZESS'
+      label: 'COACH & MENTOR'
     },
   },
   {
@@ -311,18 +316,18 @@ export const circularNodes = [
     data: {
       size: 'tiny',
       type: 'category',
-      label: '4. TOOLS & TECH'
+      label: 'UMSETZER & PROJEKTMANAGER'
     },
   },
   {
     id: 'three-level-category-middle-right',
     type: 'circular',
-    position: { x: 4000, y: 1640 },
+    position: { x: 4000, y: 1637 },
     parentId: 'second-wrapper',
     data: {
       size: 'tiny',
       type: 'category',
-      label: '5.\nROLLEN'
+      label: 'NETZWERKER'
     },
   }
-];
+].map(makeNodeDraggable);
