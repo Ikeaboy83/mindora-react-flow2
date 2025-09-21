@@ -242,7 +242,7 @@ export const wrapperNodes = [
     id: 'second-wrapper',
     type: 'secondWrapper',
     position: { x: 35088, y: 6000 },
-    parentId: 'first-wrapper', // Als Kind des FirstWrapperNode
+    parentId: 'first-wrapper',
     draggable: true,
     selectable: true,
     data: {

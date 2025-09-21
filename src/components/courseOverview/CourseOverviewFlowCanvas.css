@@ -68,49 +68,50 @@
   font-family: 'Blogger Sans', sans-serif !important;
 }
 
-/* EXAKT GLEICHE LÖSUNG WIE HOMEFLOW */
+/* FUNKTIONIERENDE KONFIGURATION AUS ALTER VERSION */
 
-/* Pane: Alle Touch-Gesten erlauben */
+/* Touch-Events für CourseOverviewFlowCanvas optimieren */
 .react-flow__pane {
-  touch-action: none !important;
+  touch-action: manipulation !important;
   pointer-events: auto !important;
-  user-select: none !important;
 }
 
-/* Viewport: Touch-Gesten weiterleiten */
 .react-flow__viewport {
-  touch-action: none !important;
-  pointer-events: auto !important;
+  touch-action: manipulation !important;
 }
 
-/* Nodes: Vollständig draggable machen */
 .react-flow__node {
+  touch-action: manipulation !important;
+}
+
+/* Universelle Lösung: Alle Nodes transparent für Touch-Events machen */
+.react-flow__node {
+  pointer-events: none !important;
   touch-action: none !important;
-  pointer-events: auto !important;
-  user-select: none !important;
-  cursor: grab !important;
 }
 
-.react-flow__node:hover {
-  cursor: grab !important;
-}
-
-.react-flow__node.selected,
-.react-flow__node:active {
-  cursor: grabbing !important;
-}
-
-/* Handles: Funktional halten */
-.react-flow__handle {
+.react-flow__node * {
+  pointer-events: none !important;
   touch-action: none !important;
-  pointer-events: auto !important;
-  cursor: crosshair !important;
 }
 
-/* Edges: Selektierbar aber nicht draggable */
-.react-flow__edge {
+/* Nur spezifische Node-Typen interaktiv machen */
+.react-flow__node[data-type="lerneinheit"],
+.react-flow__node[data-type="circular"],
+.react-flow__node[data-type="firstWrapper"],
+.react-flow__node[data-type="secondWrapper"] {
   pointer-events: auto !important;
-  touch-action: none !important;
+  touch-action: manipulation !important;
+}
+
+/* Touch-Events für den gesamten React Flow Container aktivieren */
+.react-flow {
+  touch-action: manipulation !important;
+}
+
+.react-flow__pane {
+  touch-action: manipulation !important;
+  pointer-events: auto !important;
 }
 
 /* Touch-Gesten sind bereits oben definiert */

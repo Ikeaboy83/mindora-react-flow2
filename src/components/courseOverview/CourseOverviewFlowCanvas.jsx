@@ -1240,27 +1240,22 @@ function FlowApp() {
         edges={initialEdges}
         nodeTypes={nodeTypes}
         fitView={true}
-        minZoom={0.0001} // Erweiterte Zoom-Grenzen für sehr große Container
-        maxZoom={20} // Höherer Max-Zoom für detaillierte Ansicht
-        defaultViewport={{ x: -10000, y: 64000, zoom: 0.3 }} // Startet mit kleinerem Zoom
+        minZoom={0.0001}
+        maxZoom={20}
+        defaultViewport={{ x: -10000, y: 64000, zoom: 0.3 }}
         onNodeClick={onNodeClick}
         onNodeDoubleClick={(event, node) => {
-          // Doppelklick-Handler für spezielle Aktionen
           if (node.type === 'gridContainer') {
             fitContainerView(node.id);
           }
         }}
         onViewportChange={(viewport) => {
-          // Hier können später haptische Rückmeldungen hinzugefügt werden
           console.log('Viewport geändert:', viewport);
         }}
-        nodesDraggable={true}
-        nodesConnectable={true}
-        elementsSelectable={true}
         zoomOnPinch={true}
-        panOnDrag={[2]} // Canvas-Panning nur mit rechter Maustaste
+        panOnDrag={true}
         zoomOnScroll={true}
-        panOnScroll={true} // Panning mit Shift+Scroll aktivieren
+        panOnScroll={false}
         zoomOnDoubleClick={false}
         preventScrolling={false}
         selectionOnDrag={false}
